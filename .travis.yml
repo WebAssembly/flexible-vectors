@@ -1,0 +1,32 @@
+language: python
+python:
+  - "3.7"
+dist: bionic
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'deb https://dl.yarnpkg.com/debian/ stable main'
+        key_url: 'https://dl.yarnpkg.com/debian/pubkey.gpg'
+    packages:
+      - ocaml
+      - ocamlbuild
+      - texlive-full
+      - yarn
+
+install:
+  - pip install Sphinx==2.4.4
+  - git clone https://github.com/tabatkins/bikeshed.git
+  - pip install --editable $PWD/bikeshed
+  - bikeshed update
+
+script:
+  - ./interpreter/meta/travis/build-test.sh
+  - bash ./document/travis-deploy.sh
+
+os: linux
+
+env:
+  global:
+    - ENCRYPTION_LABEL: "b8ac9a35f485"
+    - COMMIT_AUTHOR_EMAIL: "noreply@webassembly.org"
