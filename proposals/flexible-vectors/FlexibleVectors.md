@@ -14,10 +14,12 @@ extend the same operations to work with variable vector lengths.
 
 Proposal introduces the following vector types:
 
-- `vec.v8` : 8-bit lanes
-- `vec.v16`: 16-bit lanes
-- `vec.v32`: 32-bit lanes
-- `vec.v64`: 64-bit lanes
+- `vec.i8` : 8-bit integer lanes
+- `vec.i16`: 16-bit integer lanes
+- `vec.i32`: 32-bit integer lanes
+- `vec.i64`: 64-bit integer lanes
+- `vec.f32`: single precision floating point lanes
+- `vec.f64`: double precision floating point lanes
 
 ### Lane division interpretation
 
@@ -26,10 +28,12 @@ size of the lane in bits, `S.Lanes` is the number of lanes, which is dynamic.
 
 |    S      | S.LaneBits |
 |-----------|-----------:|
-| `vec.v8`  |          8 |
-| `vec.v16` |         16 |
-| `vec.v32` |         32 |
-| `vec.v64` |         64 |
+| `vec.i8`  |          8 |
+| `vec.i16` |         16 |
+| `vec.i32` |         32 |
+| `vec.f32` |         32 |
+| `vec.i64` |         64 |
+| `vec.f64` |         64 |
 
 ### Restrictions
 
@@ -58,19 +62,23 @@ provide interface to vector length.
 
 Querying length of supported vector:
 
-- `vec.v8.length -> i32`
-- `vec.v16.length -> i32`
-- `vec.v32.length -> i32`
-- `vec.v64.length -> i32`
+- `vec.i8.length -> i32`
+- `vec.i16.length -> i32`
+- `vec.i32.length -> i32`
+- `vec.i64.length -> i32`
+- `vec.f32.length -> i32`
+- `vec.f64.length -> i32`
 
 ### Constructing vector values
 
 Create vector with identical lanes:
 
-- `vec.v8.splat(x:i32) -> vec.v8`
-- `vec.v16.splat(x:i32) -> vec.v16`
-- `vec.v32.splat(x:i32) -> vec.v32`
-- `vec.v64.splat(x:i64) -> vec.v64`
+- `vec.i8.splat(x:i32) -> vec.i8`
+- `vec.i16.splat(x:i32) -> vec.i16`
+- `vec.i32.splat(x:i32) -> vec.i32`
+- `vec.i64.splat(x:i64) -> vec.i64`
+- `vec.f32.splat(x:f32) -> vec.f32`
+- `vec.f64.splat(x:f64) -> vec.f64`
 
 Construct vector with `x` replicated to all lanes:
 
@@ -86,14 +94,14 @@ def S.splat(x):
 
 #### Extract lane as a scalar
 
-- `vec.i8.extract_lane_s(a: vec.v8, imm: ImmLaneIdxV8) -> i32`
-- `vec.i8.extract_lane_u(a: vec.v8, imm: ImmLaneIdxV8) -> i32`
-- `vec.i16.extract_lane_s(a: vec.v16, imm: ImmLaneIdxV16) -> i32`
-- `vec.i16.extract_lane_u(a: vec.v16, imm: ImmLaneIdxV16) -> i32`
-- `vec.i32.extract_lane(a: vec.v32, imm: ImmLaneIdxV32) -> i32`
-- `vec.i64.extract_lane(a: vec.v64, imm: ImmLaneIdxV64) -> i64`
-- `vec.f32.extract_lane(a: vec.v32, imm: ImmLaneIdxV32) -> f32`
-- `vec.f64.extract_lane(a: vec.v64, imm: ImmLaneIdxV64) -> f64`
+- `vec.i8.extract_lane_s(a: vec.i8, imm: ImmLaneIdxV8) -> i32`
+- `vec.i8.extract_lane_u(a: vec.i8, imm: ImmLaneIdxV8) -> i32`
+- `vec.i16.extract_lane_s(a: vec.i16, imm: ImmLaneIdxV16) -> i32`
+- `vec.i16.extract_lane_u(a: vec.i16, imm: ImmLaneIdxV16) -> i32`
+- `vec.i32.extract_lane(a: vec.i32, imm: ImmLaneIdxV32) -> i32`
+- `vec.i64.extract_lane(a: vec.i64, imm: ImmLaneIdxV64) -> i64`
+- `vec.f32.extract_lane(a: vec.f32, imm: ImmLaneIdxV32) -> f32`
+- `vec.f64.extract_lane(a: vec.f64, imm: ImmLaneIdxV64) -> f64`
 
 Extract the scalar value of lane specified in the immediate mode operand `imm`
 in `a`. The `{interpretation}.extract_lane{_s}{_u}` instructions are encoded
@@ -109,12 +117,12 @@ The `_s` and `_u` variants will sign-extend or zero-extend the lane value to
 
 #### Replace lane value
 
-- `vec.i8.replace_lane(a: vec.v8, imm: ImmLaneIdxV8, x: i32) -> vec.v8`
-- `vec.i16.replace_lane(a: vec.v16, imm: ImmLaneIdxV16, x: i32) -> vec.v16`
-- `vec.i32.replace_lane(a: vec.v32, imm: ImmLaneIdxV32, x: i32) -> vec.v32`
-- `vec.i64.replace_lane(a: vec.v64, imm: ImmLaneIdxV64, x: i64) -> vec.v64`
-- `vec.f32.replace_lane(a: vec.v32, imm: ImmLaneIdxV32, x: f32) -> vec.v32`
-- `vec.f64.replace_lane(a: vec.v64, imm: ImmLaneIdxV64, x: f64) -> vec.v64`
+- `vec.i8.replace_lane(a: vec.i8, imm: ImmLaneIdxV8, x: i32) -> vec.i8`
+- `vec.i16.replace_lane(a: vec.i16, imm: ImmLaneIdxV16, x: i32) -> vec.i16`
+- `vec.i32.replace_lane(a: vec.i32, imm: ImmLaneIdxV32, x: i32) -> vec.i32`
+- `vec.i64.replace_lane(a: vec.i64, imm: ImmLaneIdxV64, x: i64) -> vec.i64`
+- `vec.f32.replace_lane(a: vec.f32, imm: ImmLaneIdxV32, x: f32) -> vec.f32`
+- `vec.f64.replace_lane(a: vec.f64, imm: ImmLaneIdxV64, x: f64) -> vec.f64`
 
 Return a new vector with lanes identical to `a`, except for the lane specified
 in the immediate mode operand `imm` which has the value `x`. The
@@ -148,10 +156,10 @@ Integer division operation is omitted to be compatible with 128-bit SIMD.
 
 #### Integer addition
 
-- `vec.i8.add(a: vec.v8, b: vec.v8) -> vec.v8`
-- `vec.i16.add(a: vec.v16, b: vec.v16) -> vec.v16`
-- `vec.i32.add(a: vec.v32, b: vec.v32) -> vec.v32`
-- `vec.i64.add(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.i8.add(a: vec.i8, b: vec.i8) -> vec.i8`
+- `vec.i16.add(a: vec.i16, b: vec.i16) -> vec.i16`
+- `vec.i32.add(a: vec.i32, b: vec.i32) -> vec.i32`
+- `vec.i64.add(a: vec.i64, b: vec.i64) -> vec.i64`
 
 Lane-wise wrapping integer addition:
 
@@ -164,10 +172,10 @@ def S.add(a, b):
 
 #### Integer subtraction
 
-- `vec.i8.sub(a: vec.v8, b: vec.v8) -> vec.v8`
-- `vec.i16.sub(a: vec.v16, b: vec.v16) -> vec.v16`
-- `vec.i32.sub(a: vec.v32, b: vec.v32) -> vec.v32`
-- `vec.i64.sub(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.i8.sub(a: vec.i8, b: vec.i8) -> vec.i8`
+- `vec.i16.sub(a: vec.i16, b: vec.i16) -> vec.i16`
+- `vec.i32.sub(a: vec.i32, b: vec.i32) -> vec.i32`
+- `vec.i64.sub(a: vec.i64, b: vec.i64) -> vec.i64`
 
 Lane-wise wrapping integer subtraction:
 
@@ -180,9 +188,10 @@ def S.sub(a, b):
 
 #### Integer multiplication
 
-- `vec.i8.mul(a: vec.v8, b: vec.v8) -> vec.v8`
-- `vec.i16.mul(a: vec.v16, b: vec.v16) -> vec.v16`
-- `vec.i32.mul(a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.i8.mul(a: vec.i8, b: vec.i8) -> vec.i8`
+- `vec.i16.mul(a: vec.i16, b: vec.i16) -> vec.i16`
+- `vec.i32.mul(a: vec.i32, b: vec.i32) -> vec.i32`
+- `vec.i64.mul(a: vec.i64, b: vec.i64) -> vec.i64`
 
 Lane-wise wrapping integer multiplication:
 
@@ -195,10 +204,10 @@ def S.mul(a, b):
 
 #### Integer negation
 
-- `vec.i8.neg(a: vec.v8, b: vec.v8) -> vec.v8`
-- `vec.i16.neg(a: vec.v16, b: vec.v16) -> vec.v16`
-- `vec.i32.neg(a: vec.v32, b: vec.v32) -> vec.v32`
-- `vec.i64.neg(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.i8.neg(a: vec.i8, b: vec.i8) -> vec.i8`
+- `vec.i16.neg(a: vec.i16, b: vec.i16) -> vec.i16`
+- `vec.i32.neg(a: vec.i32, b: vec.i32) -> vec.i32`
+- `vec.i64.neg(a: vec.i64, b: vec.i64) -> vec.i64`
 
 Lane-wise wrapping integer negation. In wrapping arithmetic, `y = -x` is the
 unique value such that `x + y == 0`.
@@ -262,36 +271,36 @@ existing scalar WebAssembly operations.
 
 #### Addition
 
-- `vec.f32.add(a: vec.v32, b: vec.v32) -> vec.v32`
-- `vec.f64.add(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.f32.add(a: vec.f32, b: vec.f32) -> vec.f32`
+- `vec.f64.add(a: vec.f64, b: vec.f64) -> vec.f64`
 
 Lane-wise IEEE `addition`.
 
 #### Subtraction
 
-- `vec.f32.sub(a: vec.v32, b: vec.v32) -> vec.v32`
-- `vec.f64.sub(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.f32.sub(a: vec.f32, b: vec.f32) -> vec.f32`
+- `vec.f64.sub(a: vec.f64, b: vec.f64) -> vec.f64`
 
 Lane-wise IEEE `subtraction`.
 
 #### Division
 
-- `vec.f32.div(a: vec.v32, b: vec.v32) -> vec.v32`
-- `vec.f64.div(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.f32.div(a: vec.f32, b: vec.f32) -> vec.f32`
+- `vec.f64.div(a: vec.f64, b: vec.f64) -> vec.f64`
 
 Lane-wise IEEE `division`.
 
 #### Multiplication
 
-- `vec.f32.mul(a: vec.v32, b: vec.v32) -> vec.v32`
-- `vec.f64.mul(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.f32.mul(a: vec.f32, b: vec.f32) -> vec.f32`
+- `vec.f64.mul(a: vec.f64, b: vec.f64) -> vec.f64`
 
 Lane-wise IEEE `multiplication`.
 
 #### Square root
 
-- `vec.f32.sqrt(a: vec.v32, b: vec.v32) -> vec.v32`
-- `vec.f64.sqrt(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.f32.sqrt(a: vec.f32, b: vec.f32) -> vec.f32`
+- `vec.f64.sqrt(a: vec.f64, b: vec.f64) -> vec.f64`
 
 Lane-wise IEEE `squareRoot`.
 
@@ -305,17 +314,21 @@ _TBD_
 _TBD whether this should be included_
 
 - 8-bit lanes
-  - `vec.v8.set_length(len: i32) -> i32`
-  - `vec.v8.set_length_imm(imm: ImmLaneIdx8) -> i32`
+  - `vec.i8.set_length(len: i32) -> i32`
+  - `vec.i8.set_length_imm(imm: ImmLaneIdx8) -> i32`
 - 16-bit lanes
-  - `vec.v16.set_length(len: i32) -> i32`
-  - `vec.v16.set_length_imm(imm: ImmLaneIdx16) -> i32`
+  - `vec.i16.set_length(len: i32) -> i32`
+  - `vec.i16.set_length_imm(imm: ImmLaneIdx16) -> i32`
 - 32-bit lanes
-  - `vec.v32.set_length(len: i32) -> i32`
-  - `vec.v32.set_length_imm(imm: ImmLaneIdx32) -> i32`
+  - `vec.i32.set_length(len: i32) -> i32`
+  - `vec.i32.set_length_imm(imm: ImmLaneIdx32) -> i32`
+  - `vec.f32.set_length(len: i32) -> i32`
+  - `vec.f32.set_length_imm(imm: ImmLaneIdx32) -> i32`
 - 64-bit lanes
-  - `vec.v64.set_length(len: i32) -> i32`
-  - `vec.v64.set_length_imm(imm: ImmLaneIdx64) -> i32`
+  - `vec.i64.set_length(len: i32) -> i32`
+  - `vec.i64.set_length_imm(imm: ImmLaneIdx64) -> i32`
+  - `vec.f64.set_length(len: i32) -> i32`
+  - `vec.f64.set_length_imm(imm: ImmLaneIdx64) -> i32`
 
 The above operations set the number of lanes for corresponding vector type to
 the minimum of supported vector length and the requested length. The length is
