@@ -221,7 +221,137 @@ def S.neg(a):
 
 ### Saturating integer arithmetic
 
-_TBD_
+Saturating integer arithmetic behaves differently on signed and unsigned lanes.
+
+```python
+def S.SignedSaturate(x):
+    if x < S.Smin:
+        return S.Smin
+    if x > S.Smax:
+        return S.Smax
+    return x
+
+def S.UnsignedSaturate(x):
+    if x < 0:
+        return 0
+    if x > S.Umax:
+        return S.Umax
+    return x
+```
+
+### Saturating integer addition
+* `vec.i8.add_sat_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.add_sat_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.add_sat_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.add_sat_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.add_sat_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.add_sat_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.add_sat_u(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.add_sat_u(a: vec.i64, b: vec.i64) -> vec.i64`
+
+Lane-wise saturating addition:
+
+```python
+def S.add_sat_s(a, b):
+    def addsat(x, y):
+        return S.SignedSaturate(x + y)
+    return S.lanewise_binary(addsat, S.AsSigned(a), S.AsSigned(b))
+
+def S.add_sat_u(a, b):
+    def addsat(x, y):
+        return S.UnsignedSaturate(x + y)
+    return S.lanewise_binary(addsat, S.AsUnsigned(a), S.AsUnsigned(b))
+```
+
+### Saturating integer subtraction
+* `vec.i8.sub_sat_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.sub_sat_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.sub_sat_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.sub_sat_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.sub_sat_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.sub_sat_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.sub_sat_u(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.sub_sat_u(a: vec.i64, b: vec.i64) -> vec.i64`
+
+Lane-wise saturating subtraction:
+
+```python
+def S.sub_sat_s(a, b):
+    def subsat(x, y):
+        return S.SignedSaturate(x - y)
+    return S.lanewise_binary(subsat, S.AsSigned(a), S.AsSigned(b))
+
+def S.sub_sat_u(a, b):
+    def subsat(x, y):
+        return S.UnsignedSaturate(x - y)
+    return S.lanewise_binary(subsat, S.AsUnsigned(a), S.AsUnsigned(b))
+```
+
+### Lane-wise integer minimum
+* `vec.i8.min_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.min_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.min_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.min_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.min_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.min_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.min_s(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.min_u(a: vec.i64, b: vec.i64) -> vec.i64`
+
+Compares lane-wise signed/unsigned integers, and returns the minimum of
+each pair.
+
+```python
+def S.min(a, b):
+    return S.lanewise_binary(min, a, b)
+```
+
+### Lane-wise integer maximum
+* `vec.i8.max_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.max_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.max_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.max_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.max_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.max_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.max_s(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.max_u(a: vec.i64, b: vec.i64) -> vec.i64`
+
+Compares lane-wise signed/unsigned integers, and returns the maximum of
+each pair.
+
+```python
+def S.max(a, b):
+    return S.lanewise_binary(max, a, b)
+```
+
+### Lane-wise integer rounding average
+* `vec.i8.avgr_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.avgr_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.avgr_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.avgr_u(a: vec.i64, b: vec.i64) -> vec.i64`
+
+Lane-wise rounding average:
+
+```python
+def S.RoundingAverage(x, y):
+    return (x + y + 1) // 2
+
+def S.avgr_u(a, b):
+    return S.lanewise_binary(S.RoundingAverage, S.AsUnsigned(a), S.AsUnsigned(b))
+```
+
+### Lane-wise integer absolute value
+* `vec.i8.abs(a: vec.i8) -> vec.i8`
+* `vec.i16.abs(a: vec.i16) -> vec.i16`
+* `vec.i32.abs(a: vec.i32) -> vec.i32`
+* `vec.i64.abs(a: vec.i64) -> vec.i64`
+
+Lane-wise wrapping absolute value.
+
+```python
+def S.abs(a):
+    return S.lanewise_unary(abs, S.AsSigned(a))
+```
+
 
 ### Bit shifts
 
