@@ -355,9 +355,56 @@ def S.abs(a):
 
 ### Bit shifts
 
-_TBD_
+### Left shift by scalar
+* `vec.i8.shl(a: vec.i8, y: i32) -> vec.i8`
+* `vec.i16.shl(a: vec.i16, y: i32) -> vec.i16`
+* `vec.i32.shl(a: vec.i32, y: i32) -> vec.i32`
+* `vec.i64.shl(a: vec.i64, y: i32) -> vec.i64`
 
-### Bit wise operations
+Shift the bits in each lane to the left by the same amount. The shift count is
+taken modulo lane width:
+
+```python
+def S.shl(a, y):
+    # Number of bits to shift: 0 .. S.LaneBits - 1.
+    amount = y mod S.LaneBits
+    def shift(x):
+        return S.Reduce(x << amount)
+    return S.lanewise_unary(shift, a)
+```
+
+### Right shift by scalar
+* `vec.i8.shr_s(a: vec.i8, y: i32) -> vec.i8`
+* `vec.i8.shr_u(a: vec.i8, y: i32) -> vec.i8`
+* `vec.i16.shr_s(a: vec.i16, y: i32) -> vec.i16`
+* `vec.i16.shr_u(a: vec.i16, y: i32) -> vec.i16`
+* `vec.i32.shr_s(a: vec.i32, y: i32) -> vec.i32`
+* `vec.i32.shr_u(a: vec.i32, y: i32) -> vec.i32`
+* `vec.i64.shr_s(a: vec.i64, y: i32) -> vec.i64`
+* `vec.i64.shr_u(a: vec.i64, y: i32) -> vec.i64`
+
+Shift the bits in each lane to the right by the same amount. The shift count is
+taken modulo lane width.  This is an arithmetic right shift for the `_s`
+variants and a logical right shift for the `_u` variants.
+
+```python
+def S.shr_s(a, y):
+    # Number of bits to shift: 0 .. S.LaneBits - 1.
+    amount = y mod S.LaneBits
+    def shift(x):
+        return x >> amount
+    return S.lanewise_unary(shift, S.AsSigned(a))
+
+def S.shr_u(a, y):
+    # Number of bits to shift: 0 .. S.LaneBits - 1.
+    amount = y mod S.LaneBits
+    def shift(x):
+        return x >> amount
+    return S.lanewise_unary(shift, S.AsUnsigned(a))
+```
+
+
+## Bitwise operations
 
 _TBD_
 
