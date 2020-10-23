@@ -141,8 +141,53 @@ def S.replace_lane(a, i, x):
 The input lane value, `x`, is interpreted the same way as for the splat
 instructions. For the `i8` and `i16` lanes, the high bits of `x` are ignored.
 
+### Shuffles
 
-### Integer arithmetic
+#### Left lane-wise shift by scalar
+
+* `vec.i8.lshl(a: vec.i8, x: i32) -> vec.i8`
+* `vec.i16.lshl(a: vec.i16, x: i32) -> vec.i16`
+* `vec.i32.lshl(a: vec.i32, x: i32) -> vec.i32`
+* `vec.i64.lshl(a: vec.i64, x: i32) -> vec.i64`
+
+Returns a new vector with lanes selected from the lanes of the two input
+vectors `a` and `b` by shifting lanes of the original to the left by the amount
+specified in the integer argument and shifting zero values in.
+
+```python
+def S.lshl(a, x):
+    result = S.New()
+    for i in range(S.Lanes):
+        if i < x:
+            result[i] = 0
+        else:
+            result[i] = a[i - x]
+    return result
+```
+
+#### Right lane-wise shift by scalar
+
+* `vec.i8.lshr(a: vec.i8, x: i32) -> vec.i8`
+* `vec.i16.lshr(a: vec.i16, x: i32) -> vec.i16`
+* `vec.i32.lshr(a: vec.i32, x: i32) -> vec.i32`
+* `vec.i64.lshr(a: vec.i64, x: i32) -> vec.i64`
+
+Returns a new vector with lanes selected from the lanes of the two input
+vectors `a` and `b` by shifting lanes of the original to the right by the
+amount specified in the integer argument and shifting zero values in.
+
+```python
+def S.lshr(a, x):
+    result = S.New()
+    for i in range(S.Lanes):
+        if i < S.Lanes - x:
+            result[i] = a[i + x]
+        else:
+            result[i] = 0
+    return result
+```
+
+## Integer arithmetic
 
 Wrapping integer arithmetic discards the high bits of the result.
 
