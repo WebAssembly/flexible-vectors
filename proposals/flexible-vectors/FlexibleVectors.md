@@ -451,7 +451,32 @@ def S.shr_u(a, y):
 
 ## Bitwise operations
 
-_TBD_
+### Bitwise logic
+* `vec.i8.and(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.or(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.xor(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.not(a: vec.i8) -> vec.i8`
+
+The logical operations defined on the scalar integer types are also available
+on the `v128` type where they operate bitwise the same way C's `&`, `|`, `^`,
+and `~` operators work on an `unsigned` type.
+
+### Bitwise AND-NOT
+
+* `vec.i8.andnot(a: vec.i8, b: vec.i8) -> vec.i8`
+
+Bitwise AND of bits of `a` and the logical inverse of bits of `b`. This operation is equivalent to `vec.i8.and(a, vec.i8.not(b))`.
+
+### Bitwise select
+* `vec.i8.bitselect(v1: vec.i8, v2: vec.i8, c: vec.i8) -> vec.i8`
+
+Use the bits in the control mask `c` to select the corresponding bit from `v1`
+when 1 and `v2` when 0.
+This is the same as `vec.i8.or(vec.i8.and(v1, c), vec.i8.and(v2, vec.i8.not(c)))`.
+
+Note that the normal WebAssembly `select` instruction also works with vector
+types. It selects between two whole vectors controlled by a single scalar value,
+rather than selecting bits controlled by a control mask vector.
 
 ### Boolean horizontal reductions
 
