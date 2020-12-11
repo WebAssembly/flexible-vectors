@@ -10,6 +10,11 @@ performance of vector operaions available in WebAssembly closer to native.
 platforms that are important to WebAssembly, this proposal is attempting to
 extend the same operations to work with variable vector lengths.
 
+The rest of this document contains instructions that have uncontroversial
+lowering on all platforms. There is a second considered tiers of instruction,
+which are considered useful, but have not been yet test, those can be found in
+[FlexibleVectorsSecondTier.md](FlexibleVectorsSecondTier.md).
+
 ## Types
 
 Proposal introduces the following vector types:
@@ -505,11 +510,51 @@ Store a vector to the given heap address.
 
 ### Floating-point sign bit operations
 
-_TBD_
+These floating point operations are simple manipulations of the sign bit. No
+changes are made to the exponent or trailing significand bits, even for NaN
+inputs.
+
+#### Negation
+
+* `vec.f32.neg(a: vec.f32) -> vec.f32`
+* `vec.f64.neg(a: vec.f64) -> vec.f64`
+
+Apply the IEEE `negate(x)` function to each lane. This simply inverts the sign
+bit, preserving all other bits.
+
+```python
+def S.neg(a):
+    return S.lanewise_unary(ieee.negate, a)
+```
+
+#### Floating-point absolute value
+
+* `vec.f32.abs(a: vec.f32) -> vec.f32`
+* `vec.f64.abs(a: vec.f64) -> vec.f64`
+
+Apply the IEEE `abs(x)` function to each lane. This simply clears the sign bit,
+preserving all other bits.
+
+```python
+def S.abs(a):
+    return S.lanewise_unary(ieee.abs, a)
+```
 
 ### Floating-point min and max
 
-_TBD_
+#### Pseudo-minimum
+
+* `vec.f32.pmin(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.pmin(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Lane-wise minimum value, defined as `b < a ? b : a`.
+
+#### Pseudo-maximum
+
+* `vec.f32.pmax(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.pmax(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Lane-wise maximum value, defined as `a < b ? b : a`.
 
 ### Floating-point arithmetic
 
@@ -555,35 +600,4 @@ Lane-wise IEEE `squareRoot`.
 ### Conversions
 
 _TBD_
-
-### Setting vector length
-
-_TBD whether this should be included_
-
-- 8-bit lanes
-  - `vec.i8.set_length(len: i32) -> i32`
-  - `vec.i8.set_length_imm(imm: ImmLaneIdx8) -> i32`
-- 16-bit lanes
-  - `vec.i16.set_length(len: i32) -> i32`
-  - `vec.i16.set_length_imm(imm: ImmLaneIdx16) -> i32`
-- 32-bit lanes
-  - `vec.i32.set_length(len: i32) -> i32`
-  - `vec.i32.set_length_imm(imm: ImmLaneIdx32) -> i32`
-  - `vec.f32.set_length(len: i32) -> i32`
-  - `vec.f32.set_length_imm(imm: ImmLaneIdx32) -> i32`
-- 64-bit lanes
-  - `vec.i64.set_length(len: i32) -> i32`
-  - `vec.i64.set_length_imm(imm: ImmLaneIdx64) -> i32`
-  - `vec.f64.set_length(len: i32) -> i32`
-  - `vec.f64.set_length_imm(imm: ImmLaneIdx64) -> i32`
-
-The above operations set the number of lanes for corresponding vector type to
-the minimum of supported vector length and the requested length. The length is
-then returned on the stack.
-
-This sets number of lanes for vector operations working on corresponding vector
-types. Setting vector length to zero turns corresponding vector operations
-(aside of set length) into NOPs.
-
-The following sections describe operations that work on flexible vector types.
 
