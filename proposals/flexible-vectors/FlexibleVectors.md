@@ -11,9 +11,14 @@ platforms that are important to WebAssembly, this proposal is attempting to
 extend the same operations to work with variable vector lengths.
 
 The rest of this document contains instructions that have uncontroversial
-lowering on all platforms. There is a second considered tiers of instruction,
-which are considered useful, but have not been yet test, those can be found in
-[FlexibleVectorsSecondTier.md](FlexibleVectorsSecondTier.md).
+lowering on all platforms. There are two more tiers of instructions: second
+tier containing instructions with more complex lowering without effect on other
+instructions, and third containing instructions affecting execution semantics
+or lowering of other instructions.
+
+See [FlexibleVectorsSecondTier.md](FlexibleVectorsSecondTier.md) for the second
+tier and [FlexibleVectorsThirdTier.md](FlexibleVectorsThirdTier.md) for the
+third tier.
 
 ## Types
 
