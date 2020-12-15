@@ -478,6 +478,7 @@ and `~` operators work on an `unsigned` type.
 Bitwise AND of bits of `a` and the logical inverse of bits of `b`. This operation is equivalent to `vec.i8.and(a, vec.i8.not(b))`.
 
 ### Bitwise select
+
 * `vec.i8.bitselect(v1: vec.i8, v2: vec.i8, c: vec.i8) -> vec.i8`
 
 Use the bits in the control mask `c` to select the corresponding bit from `v1`
@@ -490,7 +491,41 @@ rather than selecting bits controlled by a control mask vector.
 
 ### Boolean horizontal reductions
 
-_TBD_
+These operations reduce all the lanes of an integer vector to a single scalar
+0 or 1 value. A lane is considered "true" if it is non-zero.
+
+### Any lane true
+
+* `vec.i8.any_true(a: vec.i8) -> i32`
+* `vec.i16.any_true(a: vec.i16) -> i32`
+* `vec.i32.any_true(a: vec.i32) -> i32`
+
+These functions return 1 if any lane in `a` is non-zero, 0 otherwise.
+
+```python
+def S.any_true(a):
+    for i in range(S.Lanes):
+        if a[i] != 0:
+            return 1
+    return 0
+```
+
+### All lanes true
+
+* `vec.i8.all_true(a: vec.i8) -> i32`
+* `vec.i16.all_true(a: vec.i16) -> i32`
+* `vec.i32.all_true(a: vec.i32) -> i32`
+
+These functions return 1 if all lanes in `a` are non-zero, 0 otherwise.
+
+```python
+def S.all_true(a):
+    for i in range(S.Lanes):
+        if a[i] == 0:
+            return 0
+    return 1
+```
+
 
 ### Comparisons
 
