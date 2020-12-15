@@ -529,8 +529,98 @@ def S.all_true(a):
 
 ### Comparisons
 
-_TBD_
+The comparison operations all compare two vectors lane-wise, and produce a mask
+vector with the same number of lanes as the input interpretation where the bits
+in each lane are `0` for `false` and all ones for `true`.
 
+### Equality
+
+* `vec.i8.eq(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.eq(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.eq(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.eq(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.eq(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.eq(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Integer equality is independent of the signed/unsigned interpretation. Floating
+point equality follows IEEE semantics, so a NaN lane compares not equal with
+anything, including itself, and +0.0 is equal to -0.0:
+
+```python
+def S.eq(a, b):
+    def eq(x, y):
+        return x == y
+    return S.lanewise_comparison(eq, a, b)
+```
+
+### Non-equality
+
+* `vec.i8.ne(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.ne(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.ne(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.ne(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.ne(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.ne(a: vec.f64, b: vec.f64) -> vec.f64`
+
+The `ne` operations produce the inverse of their `eq` counterparts:
+
+```python
+def S.ne(a, b):
+    def ne(x, y):
+        return x != y
+    return S.lanewise_comparison(ne, a, b)
+```
+
+### Less than
+
+* `vec.i8.lt_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.lt_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.lt_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.lt_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.lt_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.lt_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.lt_s(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.lt_u(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.lt(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.lt(a: vec.f64, b: vec.f64) -> vec.f64`
+
+### Less than or equal
+
+* `vec.i8.le_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.le_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.le_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.le_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.le_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.le_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.le_s(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.le_u(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.le(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.le(a: vec.f64, b: vec.f64) -> vec.f64`
+
+### Greater than
+
+* `vec.i8.gt_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.gt_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.gt_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.gt_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.gt_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.gt_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.gt_s(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.gt(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.gt(a: vec.f64, b: vec.f64) -> vec.f64`
+
+### Greater than or equal
+
+* `vec.i8.ge_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.ge_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.ge_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.ge_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.ge_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.ge_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.ge_s(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.ge_u(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.ge(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.ge(a: vec.f64, b: vec.f64) -> vec.f64`
 
 ### Load and store
 
