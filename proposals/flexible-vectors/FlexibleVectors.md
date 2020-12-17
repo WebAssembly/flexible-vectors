@@ -197,7 +197,7 @@ def S.lshr(a, x):
     return result
 ```
 
-## Integer arithmetic
+### Integer arithmetic
 
 Wrapping integer arithmetic discards the high bits of the result.
 
@@ -294,7 +294,8 @@ def S.UnsignedSaturate(x):
     return x
 ```
 
-### Saturating integer addition
+#### Saturating integer addition
+
 * `vec.i8.add_sat_s(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.add_sat_u(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i16.add_sat_s(a: vec.i16, b: vec.i16) -> vec.i16`
@@ -318,7 +319,8 @@ def S.add_sat_u(a, b):
     return S.lanewise_binary(addsat, S.AsUnsigned(a), S.AsUnsigned(b))
 ```
 
-### Saturating integer subtraction
+#### Saturating integer subtraction
+
 * `vec.i8.sub_sat_s(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.sub_sat_u(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i16.sub_sat_s(a: vec.i16, b: vec.i16) -> vec.i16`
@@ -342,7 +344,8 @@ def S.sub_sat_u(a, b):
     return S.lanewise_binary(subsat, S.AsUnsigned(a), S.AsUnsigned(b))
 ```
 
-### Lane-wise integer minimum
+#### Lane-wise integer minimum
+
 * `vec.i8.min_s(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.min_u(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i16.min_s(a: vec.i16, b: vec.i16) -> vec.i16`
@@ -360,7 +363,8 @@ def S.min(a, b):
     return S.lanewise_binary(min, a, b)
 ```
 
-### Lane-wise integer maximum
+#### Lane-wise integer maximum
+
 * `vec.i8.max_s(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.max_u(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i16.max_s(a: vec.i16, b: vec.i16) -> vec.i16`
@@ -378,7 +382,8 @@ def S.max(a, b):
     return S.lanewise_binary(max, a, b)
 ```
 
-### Lane-wise integer rounding average
+#### Lane-wise integer rounding average
+
 * `vec.i8.avgr_u(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i16.avgr_u(a: vec.i16, b: vec.i16) -> vec.i16`
 * `vec.i32.avgr_u(a: vec.i32, b: vec.i32) -> vec.i32`
@@ -394,7 +399,8 @@ def S.avgr_u(a, b):
     return S.lanewise_binary(S.RoundingAverage, S.AsUnsigned(a), S.AsUnsigned(b))
 ```
 
-### Lane-wise integer absolute value
+#### Lane-wise integer absolute value
+
 * `vec.i8.abs(a: vec.i8) -> vec.i8`
 * `vec.i16.abs(a: vec.i16) -> vec.i16`
 * `vec.i32.abs(a: vec.i32) -> vec.i32`
@@ -410,7 +416,8 @@ def S.abs(a):
 
 ### Bit shifts
 
-### Left shift by scalar
+#### Left shift by scalar
+
 * `vec.i8.shl(a: vec.i8, y: i32) -> vec.i8`
 * `vec.i16.shl(a: vec.i16, y: i32) -> vec.i16`
 * `vec.i32.shl(a: vec.i32, y: i32) -> vec.i32`
@@ -428,7 +435,8 @@ def S.shl(a, y):
     return S.lanewise_unary(shift, a)
 ```
 
-### Right shift by scalar
+#### Right shift by scalar
+
 * `vec.i8.shr_s(a: vec.i8, y: i32) -> vec.i8`
 * `vec.i8.shr_u(a: vec.i8, y: i32) -> vec.i8`
 * `vec.i16.shr_s(a: vec.i16, y: i32) -> vec.i16`
@@ -459,9 +467,10 @@ def S.shr_u(a, y):
 ```
 
 
-## Bitwise operations
+### Bitwise operations
 
-### Bitwise logic
+#### Bitwise logic
+
 * `vec.i8.and(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.or(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.xor(a: vec.i8, b: vec.i8) -> vec.i8`
@@ -471,13 +480,13 @@ The logical operations defined on the scalar integer types are also available
 on the `v128` type where they operate bitwise the same way C's `&`, `|`, `^`,
 and `~` operators work on an `unsigned` type.
 
-### Bitwise AND-NOT
+#### Bitwise AND-NOT
 
 * `vec.i8.andnot(a: vec.i8, b: vec.i8) -> vec.i8`
 
 Bitwise AND of bits of `a` and the logical inverse of bits of `b`. This operation is equivalent to `vec.i8.and(a, vec.i8.not(b))`.
 
-### Bitwise select
+#### Bitwise select
 
 * `vec.i8.bitselect(v1: vec.i8, v2: vec.i8, c: vec.i8) -> vec.i8`
 
@@ -494,7 +503,7 @@ rather than selecting bits controlled by a control mask vector.
 These operations reduce all the lanes of an integer vector to a single scalar
 0 or 1 value. A lane is considered "true" if it is non-zero.
 
-### Any lane true
+#### Any lane true
 
 * `vec.i8.any_true(a: vec.i8) -> i32`
 * `vec.i16.any_true(a: vec.i16) -> i32`
@@ -510,7 +519,7 @@ def S.any_true(a):
     return 0
 ```
 
-### All lanes true
+#### All lanes true
 
 * `vec.i8.all_true(a: vec.i8) -> i32`
 * `vec.i16.all_true(a: vec.i16) -> i32`
@@ -525,7 +534,6 @@ def S.all_true(a):
             return 0
     return 1
 ```
-
 
 ### Comparisons
 

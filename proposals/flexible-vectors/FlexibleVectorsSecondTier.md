@@ -12,7 +12,7 @@ These operations are not part of the IEEE 754-2008 standard. They are lane-wise
 versions of the existing scalar WebAssembly operations.
 
 <details>
-  <summary>Implementation notes</summary
+  <summary>Implementation notes</summary>
 
   NaN queting required for these operation is expensive on x86-based platforms.
   See [WebAssembly/simd#186](https://github.com/WebAssembly/simd/issues/186).
