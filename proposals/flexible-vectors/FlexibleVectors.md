@@ -533,7 +533,16 @@ The comparison operations all compare two vectors lane-wise, and produce a mask
 vector with the same number of lanes as the input interpretation where the bits
 in each lane are `0` for `false` and all ones for `true`.
 
-### Equality
+<details>
+  <summary>Implementation notes</summary>
+
+  Some classes of comparison operations (for example in AVX512 and SVE) return
+  a mask while others return a vector containing results in its lanes. This
+  section mightn need to be tuned.
+
+</details>
+
+#### Equality
 
 * `vec.i8.eq(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i16.eq(a: vec.i16, b: vec.i16) -> vec.i16`
@@ -553,7 +562,7 @@ def S.eq(a, b):
     return S.lanewise_comparison(eq, a, b)
 ```
 
-### Non-equality
+#### Non-equality
 
 * `vec.i8.ne(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i16.ne(a: vec.i16, b: vec.i16) -> vec.i16`
@@ -571,7 +580,7 @@ def S.ne(a, b):
     return S.lanewise_comparison(ne, a, b)
 ```
 
-### Less than
+#### Less than
 
 * `vec.i8.lt_s(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.lt_u(a: vec.i8, b: vec.i8) -> vec.i8`
@@ -584,7 +593,7 @@ def S.ne(a, b):
 * `vec.f32.lt(a: vec.f32, b: vec.f32) -> vec.f32`
 * `vec.f64.lt(a: vec.f64, b: vec.f64) -> vec.f64`
 
-### Less than or equal
+#### Less than or equal
 
 * `vec.i8.le_s(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.le_u(a: vec.i8, b: vec.i8) -> vec.i8`
@@ -597,7 +606,7 @@ def S.ne(a, b):
 * `vec.f32.le(a: vec.f32, b: vec.f32) -> vec.f32`
 * `vec.f64.le(a: vec.f64, b: vec.f64) -> vec.f64`
 
-### Greater than
+#### Greater than
 
 * `vec.i8.gt_s(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.gt_u(a: vec.i8, b: vec.i8) -> vec.i8`
@@ -609,7 +618,7 @@ def S.ne(a, b):
 * `vec.f32.gt(a: vec.f32, b: vec.f32) -> vec.f32`
 * `vec.f64.gt(a: vec.f64, b: vec.f64) -> vec.f64`
 
-### Greater than or equal
+#### Greater than or equal
 
 * `vec.i8.ge_s(a: vec.i8, b: vec.i8) -> vec.i8`
 * `vec.i8.ge_u(a: vec.i8, b: vec.i8) -> vec.i8`
@@ -622,7 +631,7 @@ def S.ne(a, b):
 * `vec.f32.ge(a: vec.f32, b: vec.f32) -> vec.f32`
 * `vec.f64.ge(a: vec.f64, b: vec.f64) -> vec.f64`
 
-### Load and store
+#### Load and store
 
 - `vec.v8.load(memarg) -> vec.v8`
 - `vec.v16.load(memarg) -> vec.v16`
