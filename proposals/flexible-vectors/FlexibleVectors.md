@@ -746,5 +746,87 @@ Lane-wise IEEE `squareRoot`.
 
 ### Conversions
 
-_TBD_
+#### Integer to floating point
+
+* `vec.f32.convert_s(a: vec.i32) -> vec.f32`
+* `vec.f64.convert_s(a: vec.i64) -> vec.f64`
+
+Lane-wise conversion from integer to floating point. Some integer values will be
+rounded.
+
+#### Integer to integer narrowing
+
+* `vec.i16.narrow_s(a: vec.i16, b: vec.i16) -> vec.i8`
+* `vec.i16.narrow_u(a: vec.i16, b: vec.i16) -> vec.i8`
+* `vec.i32.narrow_s(a: vec.i32, b: vec.i32) -> vec.i16`
+* `vec.i32.narrow_u(a: vec.i32, b: vec.i32) -> vec.i16`
+* `vec.i64.narrow_s(a: vec.i64, b: vec.i64) -> vec.i32`
+* `vec.i64.narrow_u(a: vec.i64, b: vec.i64) -> vec.i32`
+
+Converts two input vectors into a smaller lane vector by narrowing each lane,
+signed or unsigned. The signed narrowing operation will use signed saturation
+to handle overflow, 0x7f or 0x80 for i8x16, the unsigned narrowing operation
+will use unsigned saturation to handle overflow, 0x00 or 0xff for i8x16.
+Regardless of the whether the operation is signed or unsigned, the input lanes
+are interpreted as signed integers.
+
+```python
+def S.narrow_T_s(a, b):
+    result = S.New()
+    for i in range(T.Lanes):
+        result[i] = S.SignedSaturate(a[i])
+    for i in range(T.Lanes):
+        result[T.Lanes + i] = S.SignedSaturate(b[i])
+    return result
+
+def S.narrow_T_u(a, b):
+    result = S.New()
+    for i in range(T.Lanes):
+        result[i] = S.UnsignedSaturate(a[i])
+    for i in range(T.Lanes):
+        result[T.Lanes + i] = S.UnsignedSaturate(b[i])
+    return result
+```
+
+#### Integer to integer widening
+
+* `vec.i8.widen_low_s(a: vec.i8) -> vec.i16`
+* `vec.i8.widen_high_s(a: vec.i8) -> vec.i16`
+* `vec.i8.widen_low_u(a: vec.i8) -> vec.i16`
+* `vec.i8.widen_high_u(a: vec.i8) -> vec.i16`
+* `vec.i16.widen_low_s(a: vec.i16) -> vec.i32`
+* `vec.i16.widen_high_s(a: vec.i16) -> vec.i32`
+* `vec.i16.widen_low_u(a: vec.i16) -> vec.i32`
+* `vec.i16.widen_high_u(a: vec.i16) -> vec.i32`
+* `vec.i32.widen_low_s(a: vec.i32) -> vec.i64`
+* `vec.i32.widen_high_s(a: vec.i32) -> vec.i64`
+* `vec.i32.widen_low_u(a: vec.i32) -> vec.i64`
+* `vec.i32.widen_high_u(a: vec.i32) -> vec.i64`
+
+Converts low or high half of the smaller lane vector to a larger lane vector,
+sign extended or zero (unsigned) extended.
+
+```python
+def S.widen_low_T(ext, a):
+    result = S.New()
+    for i in range(S.Lanes):
+        result[i] = ext(a[i])
+
+def S.widen_high_T(ext, a):
+    result = S.New()
+    for i in range(S.Lanes):
+        result[i] = ext(a[S.Lanes + i])
+
+def S.widen_low_T_s(a):
+    return S.widen_low_T(Sext, a)
+
+def S.widen_high_T_s(a):
+    return S.widen_high_T(Sext, a)
+
+def S.widen_low_T_u(a):
+    return S.widen_low_T(Zext, a)
+
+def S.widen_high_T_u(a):
+    return S.widen_high_T(Zext, a)
+```
 
