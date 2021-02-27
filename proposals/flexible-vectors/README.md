@@ -390,7 +390,6 @@ UNOP designates any unary operator (eg: neg, not)
 - `vec.v32.UNOP(a: vec.v32) -> vec.v32`
 - `vec.v64.UNOP(a: vec.v64) -> vec.v64`
 - `vec.v128.UNOP(a: vec.v128) -> vec.v128`
-
 - `vec.m8.UNOP(a: vec.m8) -> vec.m8`
 - `vec.m16.UNOP(a: vec.m16) -> vec.m16`
 - `vec.m32.UNOP(a: vec.m32) -> vec.m32`
@@ -410,6 +409,15 @@ Inactive lanes are set to zero.
 - `vec.v32.UNOP_mz(m: vec.m32, a: vec.v32) -> vec.v32`
 - `vec.v64.UNOP_mz(m: vec.m64, a: vec.v64) -> vec.v64`
 - `vec.v128.UNOP_mz(m: vec.m128, a: vec.v128) -> vec.v128`
+- `vec.m8.UNOP_mz(m: vec.m8, a: vec.m8) -> vec.m8`
+- `vec.m16.UNOP_mz(m: vec.m16, a: vec.m16) -> vec.m16`
+- `vec.m32.UNOP_mz(m: vec.m32, a: vec.m32) -> vec.m32`
+- `vec.m64.UNOP_mz(m: vec.m64, a: vec.m64) -> vec.m64`
+- `vec.m128.UNOP_mz(m: vec.m128, a: vec.m128) -> vec.m128`
+
+Note:
+
+> - Masks only support bitwise operations.
 
 ### UNOP mask merge
 
@@ -420,6 +428,15 @@ Inactive lanes are left untouched.
 - `vec.v32.UNOP_mm(m: vec.m32, a: vec.v32) -> vec.v32`
 - `vec.v64.UNOP_mm(m: vec.m64, a: vec.v64) -> vec.v64`
 - `vec.v128.UNOP_mm(m: vec.m128, a: vec.v128) -> vec.v128`
+- `vec.m8.UNOP_mm(m: vec.m8, a: vec.m8) -> vec.m8`
+- `vec.m16.UNOP_mm(m: vec.m16, a: vec.m16) -> vec.m16`
+- `vec.m32.UNOP_mm(m: vec.m32, a: vec.m32) -> vec.m32`
+- `vec.m64.UNOP_mm(m: vec.m64, a: vec.m64) -> vec.m64`
+- `vec.m128.UNOP_mm(m: vec.m128, a: vec.m128) -> vec.m128`
+
+Note:
+
+> - Masks only support bitwise operations.
 
 ### UNOP mask undefined
 
@@ -452,7 +469,6 @@ Selects active elements from `a` and inactive elements from `b`.
 - `vec.v32.BINOP(a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.BINOP(a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.BINOP(a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.BINOP(a: vec.m8, b: vec.m8) -> vec.m8`
 - `vec.m16.BINOP(a: vec.m16, b: vec.m16) -> vec.m16`
 - `vec.m32.BINOP(a: vec.m32, b: vec.m32) -> vec.m32`
@@ -472,7 +488,6 @@ Inactive elements are set to zero.
 - `vec.v32.BINOP_mz(m: vec.m32, a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.BINOP_mz(m: vec.m64, a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.BINOP_mz(m: vec.m128, a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.BINOP_mz(m: vec.m8, a: vec.m8, b: vec.m8) -> vec.m8`
 - `vec.m16.BINOP_mz(m: vec.m16, a: vec.m16, b: vec.m16) -> vec.m16`
 - `vec.m32.BINOP_mz(m: vec.m32, a: vec.m32, b: vec.m32) -> vec.m32`
@@ -492,7 +507,6 @@ Inactive elements are forwarded from `a`.
 - `vec.v32.BINOP_mm(m: vec.m32, a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.BINOP_mm(m: vec.m64, a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.BINOP_mm(m: vec.m128, a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.BINOP_mm(m: vec.m8, a: vec.m8, b: vec.m8) -> vec.m8`
 - `vec.m16.BINOP_mm(m: vec.m16, a: vec.m16, b: vec.m16) -> vec.m16`
 - `vec.m32.BINOP_mm(m: vec.m32, a: vec.m32, b: vec.m32) -> vec.m32`
@@ -723,7 +737,6 @@ Extracts even elements from both input and interleaves them.
 - `vec.v32.interleave_even(a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.interleave_even(a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.interleave_even(a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.interleave_even(a: vec.m8, b: mec.m8) -> vec.m8`
 - `vec.m16.interleave_even(a: vec.m16, b: mec.m16) -> vec.m16`
 - `vec.m32.interleave_even(a: vec.m32, b: mec.m32) -> vec.m32`
@@ -753,7 +766,6 @@ Extracts odd elements from both input and interleaves them.
 - `vec.v32.interleave_odd(a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.interleave_odd(a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.interleave_odd(a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.interleave_odd(a: vec.m8, b: vec.m8) -> vec.m8`
 - `vec.m16.interleave_odd(a: vec.m16, b: vec.m16) -> vec.m16`
 - `vec.m32.interleave_odd(a: vec.m32, b: vec.m32) -> vec.m32`
@@ -783,7 +795,6 @@ Extracts even elements from both input and concatenate them.
 - `vec.v32.concat_even(a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.concat_even(a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.concat_even(a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.concat_even(a: vec.m8, b: vec.m8) -> vec.m8`
 - `vec.m16.concat_even(a: vec.m16, b: vec.m16) -> vec.m16`
 - `vec.m32.concat_even(a: vec.m32, b: vec.m32) -> vec.m32`
@@ -816,7 +827,6 @@ Extracts odd elements from both input and concatenate them.
 - `vec.v32.concat_odd(a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.concat_odd(a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.concat_odd(a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.concat_odd(a: vec.m8, b: vec.m8) -> vec.m8`
 - `vec.m16.concat_odd(a: vec.m16, b: vec.m16) -> vec.m16`
 - `vec.m32.concat_odd(a: vec.m32, b: vec.m32) -> vec.m32`
@@ -848,7 +858,6 @@ Extracts the lower half of both input and interleaves their elements.
 - `vec.v32.interleave_low(a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.interleave_low(a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.interleave_low(a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.interleave_low(a: vec.m8, b: vec.m8) -> vec.m8`
 - `vec.m16.interleave_low(a: vec.m16, b: vec.m16) -> vec.m16`
 - `vec.m32.interleave_low(a: vec.m32, b: vec.m32) -> vec.m32`
@@ -878,7 +887,6 @@ Extracts the higher half of both input and interleaves their elements.
 - `vec.v32.interleave_high(a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.interleave_high(a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.interleave_high(a: vec.v128, b: vec.v128) -> vec.v128`
-
 - `vec.m8.interleave_high(a: vec.m8, b: vec.m8) -> vec.m8`
 - `vec.m16.interleave_high(a: vec.m16, b: vec.m16) -> vec.m16`
 - `vec.m32.interleave_high(a: vec.m32, b: vec.m32) -> vec.m32`
@@ -939,7 +947,6 @@ def mask.S.narrow(a, b):
 - `vec.i32.widen_low_i16_s(a: vec.v8) -> vec.v32`
 - `vec.i64.widen_low_i32_u(a: vec.v8) -> vec.v64`
 - `vec.i64.widen_low_i32_s(a: vec.v8) -> vec.v64`
-
 - `vec.i16.widen_high_i8_u(a: vec.v8) -> vec.v16`
 - `vec.i16.widen_high_i8_s(a: vec.v8) -> vec.v16`
 - `vec.i32.widen_high_i16_u(a: vec.v8) -> vec.v32`
@@ -955,7 +962,6 @@ Returns a `mask` for a wider type with the same active lanes as the lower/higher
 - `vec.m32.widen_low_m16(m: vec.m16) -> vec.m32`
 - `vec.m64.widen_low_m32(m: vec.m32) -> vec.m64`
 - `vec.m128.widen_low_m64(m: vec.m64) -> vec.m128`
-
 - `vec.m16.widen_high_m8(m: vec.m8) -> vec.m16`
 - `vec.m32.widen_high_m16(m: vec.m16) -> vec.m32`
 - `vec.m64.widen_high_m32(m: vec.m32) -> vec.m64`
