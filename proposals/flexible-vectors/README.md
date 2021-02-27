@@ -583,6 +583,7 @@ For each lane, the mask lane is set to `1` if the element is negative (floats ar
 
 ### LUT1 zero
 
+Gets elements from `a` located at the index specified by `idx`.
 Elements whose index is out of bounds are set to `0`.
 
 - `vec.v8.lut1_z(idx: vec.v8, a: vec.v8) -> vec.v8`
@@ -601,9 +602,11 @@ def vec.S.lut1_z(idx, a):
             result[i] = 0
     return result
 ```
+
 ### LUT1 merge
 
-Elements whose index is out of bounds are taken from fallback.
+Gets elements from `a` located at the index specified by `idx`.
+Elements whose index is out of bounds are taken from `fallback`.
 
 - `vec.v8.lut1_m(idx: vec.v8, a: vec.v8, fallback: vec.v8) -> vec.v8`
 - `vec.v16.lut1_m(idx: vec.v16, a: vec.v16, fallback: vec.v16) -> vec.v16`
@@ -616,6 +619,55 @@ def vec.S.lut1_m(idx, a, fallback):
     for i in range(vec.S.length):
         if idx[i] < vec.S.length:
             result[i] = a[idx[i]]
+        else:
+            result[i] = fallback[i]
+    return result
+```
+
+### LUT2 zero
+
+Gets elements from `a` and `b` located at the index specified by `idx`.
+If the index is lower than length, elements are taken from `a`, if index is between length and 2 * length, elements are taken from `b`.
+Elements whose index is out of bounds are set to `0`.
+
+- `vec.v8.lut2_z(idx: vec.v8, a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.lut2_z(idx: vec.v16, a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.lut2_z(idx: vec.v32, a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.lut2_z(idx: vec.v64, a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.lut2_z(idx: vec.v128, a: vec.v128, b: vec.v128) -> vec.v128`
+
+```python
+def vec.S.lut2_z(idx, a):
+    result = vec.S.New()
+    for i in range(vec.S.length):
+        if idx[i] < vec.S.length:
+            result[i] = a[idx[i]]
+        elif idx[i] < 2*vec.S.length:
+            result[i] = b[idx[i] - vec.S.length]
+        else:
+            result[i] = 0
+    return result
+```
+### LUT2 merge
+
+Gets elements from `a` and `b` located at the index specified by `idx`.
+If the index is lower than length, elements are taken from `a`, if index is between length and 2 * length, elements are taken from `b`.
+Elements whose index is out of bounds are taken from fallback.
+
+- `vec.v8.lut2_m(idx: vec.v8, a: vec.v8, b: vec.v8, fallback: vec.v8) -> vec.v8`
+- `vec.v16.lut2_m(idx: vec.v16, a: vec.v16, b: vec.v16, fallback: vec.v16) -> vec.v16`
+- `vec.v32.lut2_m(idx: vec.v32, a: vec.v32, b: vec.v32, fallback: vec.v32) -> vec.v32`
+- `vec.v64.lut2_m(idx: vec.v64, a: vec.v64, b: vec.v64, fallback: vec.v64) -> vec.v64`
+- `vec.v128.lut2_m(idx: vec.v128, a: vec.v128, b: vec.v128, fallback: vec.v128) -> vec.v128`
+
+```python
+def vec.S.lut2_m(idx, a, b, fallback):
+    result = vec.S.New()
+    for i in range(vec.S.length):
+        if idx[i] < vec.S.length:
+            result[i] = a[idx[i]]
+        elif idx[i] < 2*vec.S.length:
+            result[i] = b[idx[i] - vec.S.length]
         else:
             result[i] = fallback[i]
     return result
@@ -1088,7 +1140,7 @@ def vec.S.cast_T(m):
 
 ### Mask to vec
 
-Active lanes are to `-1` (all one bits), and inactive lanes are set to 0.
+Active lanes are set to `-1` (all one bits), and inactive lanes are set to `0`.
 
 - `vec.v8.convert_m8(m: vec.m8) -> vec.v8`
 - `vec.v16.convert_m16(m: vec.m16) -> vec.v16`
