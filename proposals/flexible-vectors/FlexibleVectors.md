@@ -197,6 +197,384 @@ def S.lshr(a, x):
     return result
 ```
 
+#### LUT1 zero
+
+Gets elements from `a` located at the index specified by `idx`.
+Elements whose index is out of bounds are set to `0`.
+
+- `vec.v8.lut1_z(idx: vec.v8, a: vec.v8) -> vec.v8`
+- `vec.v16.lut1_z(idx: vec.v16, a: vec.v16) -> vec.v16`
+- `vec.v32.lut1_z(idx: vec.v32, a: vec.v32) -> vec.v32`
+- `vec.v64.lut1_z(idx: vec.v64, a: vec.v64) -> vec.v64`
+- `vec.v128.lut1_z(idx: vec.v128, a: vec.v128) -> vec.v128`
+
+```python
+def vec.S.lut1_z(idx, a):
+    result = vec.S.New()
+    for i in range(vec.S.length):
+        if idx[i] < vec.S.length:
+            result[i] = a[idx[i]]
+        else:
+            result[i] = 0
+    return result
+```
+
+#### LUT1 merge
+
+Gets elements from `a` located at the index specified by `idx`.
+Elements whose index is out of bounds are taken from `fallback`.
+
+- `vec.v8.lut1_m(idx: vec.v8, a: vec.v8, fallback: vec.v8) -> vec.v8`
+- `vec.v16.lut1_m(idx: vec.v16, a: vec.v16, fallback: vec.v16) -> vec.v16`
+- `vec.v32.lut1_m(idx: vec.v32, a: vec.v32, fallback: vec.v32) -> vec.v32`
+- `vec.v64.lut1_m(idx: vec.v64, a: vec.v64, fallback: vec.v64) -> vec.v64`
+
+```python
+def vec.S.lut1_m(idx, a, fallback):
+    result = vec.S.New()
+    for i in range(vec.S.length):
+        if idx[i] < vec.S.length:
+            result[i] = a[idx[i]]
+        else:
+            result[i] = fallback[i]
+    return result
+```
+
+#### LUT2 zero
+
+Gets elements from `a` and `b` located at the index specified by `idx`.
+If the index is lower than length, elements are taken from `a`, if index is between length and 2 * length, elements are taken from `b`.
+Elements whose index is out of bounds are set to `0`.
+
+- `vec.v8.lut2_z(idx: vec.v8, a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.lut2_z(idx: vec.v16, a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.lut2_z(idx: vec.v32, a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.lut2_z(idx: vec.v64, a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.lut2_z(idx: vec.v128, a: vec.v128, b: vec.v128) -> vec.v128`
+
+```python
+def vec.S.lut2_z(idx, a):
+    result = vec.S.New()
+    for i in range(vec.S.length):
+        if idx[i] < vec.S.length:
+            result[i] = a[idx[i]]
+        elif idx[i] < 2*vec.S.length:
+            result[i] = b[idx[i] - vec.S.length]
+        else:
+            result[i] = 0
+    return result
+```
+#### LUT2 merge
+
+Gets elements from `a` and `b` located at the index specified by `idx`.
+If the index is lower than length, elements are taken from `a`, if index is between length and 2 * length, elements are taken from `b`.
+Elements whose index is out of bounds are taken from fallback.
+
+- `vec.v8.lut2_m(idx: vec.v8, a: vec.v8, b: vec.v8, fallback: vec.v8) -> vec.v8`
+- `vec.v16.lut2_m(idx: vec.v16, a: vec.v16, b: vec.v16, fallback: vec.v16) -> vec.v16`
+- `vec.v32.lut2_m(idx: vec.v32, a: vec.v32, b: vec.v32, fallback: vec.v32) -> vec.v32`
+- `vec.v64.lut2_m(idx: vec.v64, a: vec.v64, b: vec.v64, fallback: vec.v64) -> vec.v64`
+- `vec.v128.lut2_m(idx: vec.v128, a: vec.v128, b: vec.v128, fallback: vec.v128) -> vec.v128`
+
+```python
+def vec.S.lut2_m(idx, a, b, fallback):
+    result = vec.S.New()
+    for i in range(vec.S.length):
+        if idx[i] < vec.S.length:
+            result[i] = a[idx[i]]
+        elif idx[i] < 2*vec.S.length:
+            result[i] = b[idx[i] - vec.S.length]
+        else:
+            result[i] = fallback[i]
+    return result
+```
+
+#### V128 shuffle
+
+Applies shuffle to each v128 of the vector.
+
+- `vec.i8x16.shuffle(a: vec.v128, b: vec.v128, imm: ImmLaneIdx32[16]) -> vec.v128`
+
+```python
+def vec.i8x16.shuffle(a, b, imm):
+    result = vec.v128.New()
+    for i in range(vec.v128.length):
+        result[i] = i8x16.shuffle(a[i], b[i], imm)
+    return result
+```
+
+#### V128 swizzle
+
+Applies swizzle to each v128 of the vector.
+
+- `vec.i8x16.swizzle(a: vec.v128, s: vec.v128) -> vec.v128`
+
+```python
+def vec.i8x16.swizzle(idx, a, s):
+    result = vec.v128.New()
+    for i in range(vec.v128.length):
+        result[i] = i8x16.swizzle(a[i], s[i], imm)
+    return result
+```
+
+#### Splat lane
+
+Gets a single lane from vector and broadcast it to the entire vector.
+`idx` is interpreted modulo the cardinal of the vector.
+
+- `vec.v8.splat_lane(v: vec.v8, idx: i32) -> vec.v8`
+- `vec.v16.splat_lane(v: vec.v16, idx: i32) -> vec.v16`
+- `vec.v32.splat_lane(v: vec.v32, idx: i32) -> vec.v32`
+- `vec.v64.splat_lane(v: vec.v64, idx: i32) -> vec.v64`
+- `vec.v128.splat_lane(v: vec.v128, idx: i32) -> vec.v128`
+
+```python
+def vec.S.splat_lane(v, imm):
+    idx = idx % vec.S.length
+    result = vec.S.New()
+    for i in range(vec.S.length):
+        result[i] = v[idx]
+    return result
+```
+
+#### Concat
+
+Copies elements from vector `a` from first active element to last active element.
+Inner inactive elements are also copied.
+The remaining elements are set from the first elements from `b`.
+
+- `vec.v8.concat(m: vec.m8, a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.concat(m: vec.m16, a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.concat(m: vec.m32, a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.concat(m: vec.m64, a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.concat(m: vec.m128, a: vec.v128, b: vec.v128) -> vec.v128`
+
+
+```python
+def vec.S.concat(m, a, b):
+    begin = -1
+    end = -1
+    for i in range(vec.S.length):
+        if m[i]:
+            end = i + 1
+            if begin < 0:
+                begin = i
+
+    result = vec.S.New()
+    i = 0
+    for j in range(begin, end):
+        result[i] = a[j]
+        i += 1
+    for j in range(0, vec.S.length - i):
+        result[i] = b[j]
+        i += 1
+    return result
+```
+
+#### Lane shift
+
+Concats the 2 input vector to form a single double-width vector.
+Shifts this double-width vector by `n` lane to the left (to LSB).
+Extracts the lower half of the shifted vector.
+`n` is interpreted modulo the length of the vector.
+
+
+- `vec.v8.lane_shift(a: vec.v8, b: vec.v8, n: i32) -> vec.v8`
+- `vec.v16.lane_shift(a: vec.v16, b: vec.v16, n: i32) -> vec.v16`
+- `vec.v32.lane_shift(a: vec.v32, b: vec.v32, n: i32) -> vec.v32`
+- `vec.v64.lane_shift(a: vec.v64, b: vec.v64, n: i32) -> vec.v64`
+- `vec.v128.lane_shift(a: vec.v128, b: vec.v128, n: i32) -> vec.v128`
+
+```python
+def vec.S.lane_shift(a, b, n):
+    result = vec.S.New()
+    n = n % vec.S.length
+    for i in range(0, n):
+        result[i] = a[i + n]
+    for i in range(n, vec.S.length):
+        result[i] = b[i - n]
+    return result
+```
+
+#### Interleave even
+
+Extracts even elements from both input and interleaves them.
+
+- `vec.v8.interleave_even(a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.interleave_even(a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.interleave_even(a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.interleave_even(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.interleave_even(a: vec.v128, b: vec.v128) -> vec.v128`
+- `vec.m8.interleave_even(a: vec.m8, b: mec.m8) -> vec.m8`
+- `vec.m16.interleave_even(a: vec.m16, b: mec.m16) -> vec.m16`
+- `vec.m32.interleave_even(a: vec.m32, b: mec.m32) -> vec.m32`
+- `vec.m64.interleave_even(a: vec.m64, b: mec.m64) -> vec.m64`
+- `vec.m128.interleave_even(a: vec.m128, b: mec.m128) -> vec.m128`
+
+
+```python
+def vec.S.interleave_even(a, b):
+    result = vec.S.New()
+    for i in range(vec.S.length/2):
+        result[2*i] = a[2*i]
+        result[2*i + 1] = b[2*i]
+    return result
+```
+
+Note:
+
+> - can be implemented with `TRN1` on Neon/SVE
+
+#### Interleave odd
+
+Extracts odd elements from both input and interleaves them.
+
+- `vec.v8.interleave_odd(a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.interleave_odd(a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.interleave_odd(a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.interleave_odd(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.interleave_odd(a: vec.v128, b: vec.v128) -> vec.v128`
+- `vec.m8.interleave_odd(a: vec.m8, b: vec.m8) -> vec.m8`
+- `vec.m16.interleave_odd(a: vec.m16, b: vec.m16) -> vec.m16`
+- `vec.m32.interleave_odd(a: vec.m32, b: vec.m32) -> vec.m32`
+- `vec.m64.interleave_odd(a: vec.m64, b: vec.m64) -> vec.m64`
+- `vec.m128.interleave_odd(a: vec.m128, b: vec.m128) -> vec.m128`
+
+
+```python
+def vec.S.interleave_odd(a, b):
+    result = vec.S.New()
+    for i in range(vec.S.length/2):
+        result[2*i] = a[2*i+1]
+        result[2*i + 1] = b[2*i+1]
+    return result
+```
+
+Note:
+
+> - can be implemented with `TRN2` on Neon/SVE
+
+#### Concat even
+
+Extracts even elements from both input and concatenate them.
+
+- `vec.v8.concat_even(a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.concat_even(a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.concat_even(a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.concat_even(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.concat_even(a: vec.v128, b: vec.v128) -> vec.v128`
+- `vec.m8.concat_even(a: vec.m8, b: vec.m8) -> vec.m8`
+- `vec.m16.concat_even(a: vec.m16, b: vec.m16) -> vec.m16`
+- `vec.m32.concat_even(a: vec.m32, b: vec.m32) -> vec.m32`
+- `vec.m64.concat_even(a: vec.m64, b: vec.m64) -> vec.m64`
+- `vec.m128.concat_even(a: vec.m128, b: vec.m128) -> vec.m128`
+
+
+```python
+def vec.S.concat_even(a, b):
+    result = vec.S.New()
+    
+    for i in range(vec.S.length/2):
+        result[i] = a[2*i]
+    for i in range(vec.S.length/2):
+        result[i + vec.S.length/2] = b[2*i]
+    return result
+```
+
+Note:
+
+> - can be implemented with `UZP1` on Neon/SVE
+> - Wrapping narrowing integer conversions could be implemented with this function
+
+#### Concat odd
+
+Extracts odd elements from both input and concatenate them.
+
+- `vec.v8.concat_odd(a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.concat_odd(a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.concat_odd(a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.concat_odd(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.concat_odd(a: vec.v128, b: vec.v128) -> vec.v128`
+- `vec.m8.concat_odd(a: vec.m8, b: vec.m8) -> vec.m8`
+- `vec.m16.concat_odd(a: vec.m16, b: vec.m16) -> vec.m16`
+- `vec.m32.concat_odd(a: vec.m32, b: vec.m32) -> vec.m32`
+- `vec.m64.concat_odd(a: vec.m64, b: vec.m64) -> vec.m64`
+- `vec.m128.concat_odd(a: vec.m128, b: vec.m128) -> vec.m128`
+
+
+```python
+def vec.S.concat_odd(a, b):
+    result = vec.S.New()
+    
+    for i in range(vec.S.length/2):
+        result[i] = a[2*i+1]
+    for i in range(vec.S.length/2):
+        result[i + vec.S.length/2] = b[2*i+1]
+    return result
+```
+
+Note:
+
+> - can be implemented with `UZP2` on Neon/SVE
+
+#### Interleave low
+
+Extracts the lower half of both input and interleaves their elements.
+
+- `vec.v8.interleave_low(a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.interleave_low(a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.interleave_low(a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.interleave_low(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.interleave_low(a: vec.v128, b: vec.v128) -> vec.v128`
+- `vec.m8.interleave_low(a: vec.m8, b: vec.m8) -> vec.m8`
+- `vec.m16.interleave_low(a: vec.m16, b: vec.m16) -> vec.m16`
+- `vec.m32.interleave_low(a: vec.m32, b: vec.m32) -> vec.m32`
+- `vec.m64.interleave_low(a: vec.m64, b: vec.m64) -> vec.m64`
+- `vec.m128.interleave_low(a: vec.m128, b: vec.m128) -> vec.m128`
+
+
+```python
+def vec.S.interleave_low(a, b):
+    result = vec.S.New()
+    for i in range(vec.S.length/2):
+        result[2*i] = a[i]
+        result[2*i + 1] = b[i]
+    return result
+```
+
+Note:
+
+> - can be implemented with `ZIP1` on Neon/SVE
+
+#### Interleave high
+
+Extracts the higher half of both input and interleaves their elements.
+
+- `vec.v8.interleave_high(a: vec.v8, b: vec.v8) -> vec.v8`
+- `vec.v16.interleave_high(a: vec.v16, b: vec.v16) -> vec.v16`
+- `vec.v32.interleave_high(a: vec.v32, b: vec.v32) -> vec.v32`
+- `vec.v64.interleave_high(a: vec.v64, b: vec.v64) -> vec.v64`
+- `vec.v128.interleave_high(a: vec.v128, b: vec.v128) -> vec.v128`
+- `vec.m8.interleave_high(a: vec.m8, b: vec.m8) -> vec.m8`
+- `vec.m16.interleave_high(a: vec.m16, b: vec.m16) -> vec.m16`
+- `vec.m32.interleave_high(a: vec.m32, b: vec.m32) -> vec.m32`
+- `vec.m64.interleave_high(a: vec.m64, b: vec.m64) -> vec.m64`
+- `vec.m128.interleave_high(a: vec.m128, b: vec.m128) -> vec.m128`
+
+
+```python
+def vec.S.interleave_high(a, b):
+    result = vec.S.New()
+    for i in range(vec.S.length/2):
+        result[2*i] = a[i + vec.S.length/2]
+        result[2*i + 1] = b[i + vec.S.length/2]
+    return result
+```
+
+Note:
+
+> - can be implemented with `ZIP2` on Neon/SVE
+
 ### Integer arithmetic
 
 Wrapping integer arithmetic discards the high bits of the result.
