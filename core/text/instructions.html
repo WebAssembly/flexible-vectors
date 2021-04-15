@@ -3,7 +3,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
     <title>Instructions &#8212; WebAssembly 1.1</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -83,7 +84,7 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="instructions">
+  <section id="instructions">
 <span id="text-instr"></span><span id="index-0"></span><h1>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h1>
 <p>Instructions are syntactically distinguished into <em>plain</em> and <em>structured</em> instructions.</p>
 <div class="math notranslate nohighlight">
@@ -95,7 +96,7 @@
     &amp;\Rightarrow&amp; \mathit{in} \\
 \end{array}\end{split}\]</div>
 <p>In addition, as a syntactic abbreviation, instructions can be written as S-expressions in <a class="reference internal" href="#text-foldedinstr"><span class="std std-ref">folded</span></a> form, to group them visually.</p>
-<div class="section" id="labels">
+<section id="labels">
 <span id="text-label"></span><span id="index-1"></span><h2>Labels<a class="headerlink" href="#labels" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="#text-instr-control"><span class="std std-ref">Structured control instructions</span></a> can be annotated with a symbolic <a class="reference internal" href="values.html#text-id"><span class="std std-ref">label identifier</span></a>.
 They are the only <a class="reference internal" href="modules.html#text-index"><span class="std std-ref">symbolic identifiers</span></a> that can be bound locally in an instruction sequence.
@@ -113,8 +114,8 @@ The following grammar handles the corresponding update to the <a class="referenc
 This effectively shifts all existing labels up by one,
 mirroring the fact that control instructions are indexed relatively not absolutely.</p>
 </div>
-</div>
-<div class="section" id="control-instructions">
+</section>
+<section id="control-instructions">
 <span id="text-instr-control"></span><span id="text-plaininstr"></span><span id="text-blockinstr"></span><span id="index-2"></span><h2>Control Instructions<a class="headerlink" href="#control-instructions" title="Permalink to this headline">¶</a></h2>
 <p id="text-instr-block"><span id="text-if"></span><span id="text-loop"></span><span id="text-block"></span><span id="text-blocktype"></span><a class="reference internal" href="../syntax/instructions.html#syntax-instr-control"><span class="std std-ref">Structured control instructions</span></a> can bind an optional symbolic <a class="reference internal" href="#text-label"><span class="std std-ref">label identifier</span></a>.
 The same label identifier may optionally be repeated after the corresponding <span class="math notranslate nohighlight">\(\mathtt{end}\)</span> and <span class="math notranslate nohighlight">\(\mathtt{else}\)</span> pseudo instructions, to indicate the matching delimiters.</p>
@@ -164,7 +165,7 @@ However, the special case of a type use that is syntactically empty or consists 
 <p class="admonition-title">Note</p>
 <p>The side condition stating that the <a class="reference internal" href="conventions.html#text-context"><span class="std std-ref">identifier context</span></a> <span class="math notranslate nohighlight">\(I'\)</span> must be empty in the rule for <span class="math notranslate nohighlight">\(\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{call\_indirect}}\)</span> enforces that no identifier can be bound in any <span class="math notranslate nohighlight">\(\href{../text/types.html#text-functype}{\mathtt{param}}\)</span> declaration appearing in the type annotation.</p>
 </div>
-<div class="section" id="abbreviations">
+<section id="abbreviations">
 <h3>Abbreviations<a class="headerlink" href="#abbreviations" title="Permalink to this headline">¶</a></h3>
 <p>The <span class="math notranslate nohighlight">\(\def\mathdef1807#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1807{else}\)</span> keyword of an <span class="math notranslate nohighlight">\(\def\mathdef1808#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1808{if}\)</span> instruction can be omitted if the following instruction sequence is empty.</p>
 <div class="math notranslate nohighlight">
@@ -174,9 +175,9 @@ However, the special case of a type use that is syntactically empty or consists 
     &amp;\equiv&amp;
   \def\mathdef1811#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1811{if}~~\href{../text/instructions.html#text-label}{\mathtt{label}}~~\href{../text/instructions.html#text-blocktype}{\mathtt{blocktype}}~~\href{../text/instructions.html#text-instr}{\mathtt{instr}}^\ast~~\def\mathdef1812#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1812{else}~~\def\mathdef1813#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1813{end}
 \end{array}\]</div>
-</div>
-</div>
-<div class="section" id="parametric-instructions">
+</section>
+</section>
+<section id="parametric-instructions">
 <span id="text-instr-parametric"></span><span id="index-3"></span><h2>Parametric Instructions<a class="headerlink" href="#parametric-instructions" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight" id="text-select">
 <span id="text-drop"></span>\[\begin{split}\begin{array}{llclll}
@@ -184,8 +185,8 @@ However, the special case of a type use that is syntactically empty or consists 
   \def\mathdef1814#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1814{drop} &amp;\Rightarrow&amp; \href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{drop}} \\ &amp;&amp;|&amp;
   \def\mathdef1815#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1815{select} &amp;\Rightarrow&amp; \href{../syntax/instructions.html#syntax-instr-parametric}{\mathsf{select}} \\
 \end{array}\end{split}\]</div>
-</div>
-<div class="section" id="variable-instructions">
+</section>
+<section id="variable-instructions">
 <span id="text-instr-variable"></span><span id="index-4"></span><h2>Variable Instructions<a class="headerlink" href="#variable-instructions" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight" id="text-global-set">
 <span id="text-global-get"></span><span id="text-local-tee"></span><span id="text-local-set"></span><span id="text-local-get"></span>\[\begin{split}\begin{array}{llclll}
@@ -196,8 +197,8 @@ However, the special case of a type use that is syntactically empty or consists 
   \def\mathdef1819#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1819{global.get}~~x{:}\href{../text/modules.html#text-globalidx}{\mathtt{globalidx}}_I &amp;\Rightarrow&amp; \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{global.get}}~x \\ &amp;&amp;|&amp;
   \def\mathdef1820#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1820{global.set}~~x{:}\href{../text/modules.html#text-globalidx}{\mathtt{globalidx}}_I &amp;\Rightarrow&amp; \href{../syntax/instructions.html#syntax-instr-variable}{\mathsf{global.set}}~x \\
 \end{array}\end{split}\]</div>
-</div>
-<div class="section" id="memory-instructions">
+</section>
+<section id="memory-instructions">
 <span id="text-instr-memory"></span><span id="index-5"></span><h2>Memory Instructions<a class="headerlink" href="#memory-instructions" title="Permalink to this headline">¶</a></h2>
 <p id="text-memory-grow"><span id="text-memory-size"></span><span id="text-storen"></span><span id="text-store"></span><span id="text-loadn"></span><span id="text-load"></span><span id="text-memarg"></span>The offset and alignment immediates to memory instructions are optional.
 The offset defaults to <span class="math notranslate nohighlight">\(\mathtt{0}\)</span>, the alignment to the storage size of the respective memory access, which is its <em>natural alignment</em>.
@@ -239,8 +240,8 @@ Lexically, an <span class="math notranslate nohighlight">\(\href{../text/instruc
   \def\mathdef1847#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1847{memory.size} &amp;\Rightarrow&amp; \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.size}} \\ &amp;&amp;|&amp;
   \def\mathdef1848#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1848{memory.grow} &amp;\Rightarrow&amp; \href{../syntax/instructions.html#syntax-instr-memory}{\mathsf{memory.grow}} \\
 \end{array}\end{split}\]</div>
-</div>
-<div class="section" id="numeric-instructions">
+</section>
+<section id="numeric-instructions">
 <span id="text-instr-numeric"></span><span id="index-6"></span><h2>Numeric Instructions<a class="headerlink" href="#numeric-instructions" title="Permalink to this headline">¶</a></h2>
 <div class="math notranslate nohighlight" id="text-const">
 \[\begin{split}\begin{array}{llclll}
@@ -426,8 +427,8 @@ Lexically, an <span class="math notranslate nohighlight">\(\href{../text/instruc
   \def\mathdef1987#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1987{i64.extend16\_s} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i64}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{extend}}\mathsf{16\_s} \\ &amp;&amp;|&amp;
   \def\mathdef1988#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1988{i64.extend32\_s} &amp;\Rightarrow&amp; \href{../syntax/types.html#syntax-valtype}{\mathsf{i64}}.\href{../syntax/instructions.html#syntax-instr-numeric}{\mathsf{extend}}\mathsf{32\_s} \\
 \end{array}\end{split}\]</div>
-</div>
-<div class="section" id="folded-instructions">
+</section>
+<section id="folded-instructions">
 <span id="text-foldedinstr"></span><span id="index-7"></span><h2>Folded Instructions<a class="headerlink" href="#folded-instructions" title="Permalink to this headline">¶</a></h2>
 <p>Instructions can be written as S-expressions by grouping them into <em>folded</em> form. In that notation, an instruction is wrapped in parentheses and optionally includes nested folded instructions to indicate its operands.</p>
 <p>In the case of <a class="reference internal" href="#text-instr-block"><span class="std std-ref">block instructions</span></a>, the folded form omits the <span class="math notranslate nohighlight">\(\def\mathdef1989#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef1989{end}\)</span> delimiter.
@@ -459,8 +460,8 @@ Such a folded instruction can appear anywhere a regular instruction can.</p>
 <p>Folded instructions are solely syntactic sugar,
 no additional syntactic or type-based checking is implied.</p>
 </div>
-</div>
-<div class="section" id="expressions">
+</section>
+<section id="expressions">
 <span id="text-expr"></span><span id="index-8"></span><h2>Expressions<a class="headerlink" href="#expressions" title="Permalink to this headline">¶</a></h2>
 <p>Expressions are written as instruction sequences.
 No explicit <span class="math notranslate nohighlight">\(\def\mathdef2016#1{\mbox{‘}\mathtt{#1}\mbox{’}}\mathdef2016{end}\)</span> keyword is included, since they only occur in bracketed positions.</p>
@@ -469,8 +470,8 @@ No explicit <span class="math notranslate nohighlight">\(\def\mathdef2016#1{\mbo
 \def\mathdef1755#1{{}}\mathdef1755{expression} &amp; \href{../text/instructions.html#text-expr}{\mathtt{expr}} &amp;::=&amp;
   (\mathit{in}{:}\href{../text/instructions.html#text-instr}{\mathtt{instr}})^\ast &amp;\Rightarrow&amp; \mathit{in}^\ast~\href{../syntax/instructions.html#syntax-instr-control}{\mathsf{end}} \\
 \end{array}\end{split}\]</div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
