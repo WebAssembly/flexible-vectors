@@ -178,7 +178,7 @@ def vec.S.index_CMP(x, n):
 ### Mask index first
 
 Returns the index of the first active lane.
-If there is no active lane, the index of the last lane is returned.
+If there is no active lane, the length of the vector is returned.
 
 - `vec.m8.index_first(m: vec.m8) -> i32`
 - `vec.m16.index_first(m: vec.m16) -> i32`
@@ -191,13 +191,13 @@ def vec.S.index_first(m):
     for i in range(vec.S.length):
         if m[i]:
             return i
-    return vec.S.length - 1
+    return vec.S.length
 ```
 
 ### Mask index last
 
 Returns the index of the last active lane.
-If there is no active lane, the index of the first lane is returned.
+If there is no active lane, -1 is returned.
 
 - `vec.m8.index_last(m: vec.m8) -> i32`
 - `vec.m16.index_last(m: vec.m16) -> i32`
@@ -207,7 +207,7 @@ If there is no active lane, the index of the first lane is returned.
 
 ```python
 def vec.S.index_last(m):
-    idx = 0
+    idx = -1
     for i in range(vec.S.length):
         if m[i]:
             idx = i
@@ -758,7 +758,7 @@ def vec.S.concat(m, a, b):
 ### Lane shift
 
 Concats the 2 input vector to form a single double-width vector.
-Shifts this double-width vector by `n` lane to the left (to LSB).
+Shifts this double-width vector by `n` lane to the right (to LSB).
 Extracts the lower half of the shifted vector.
 `n` is interpreted modulo the length of the vector.
 
@@ -773,10 +773,10 @@ Extracts the lower half of the shifted vector.
 def vec.S.lane_shift(a, b, n):
     result = vec.S.New()
     n = n % vec.S.length
-    for i in range(0, n):
+    for i in range(0, vec.S.length - n):
         result[i] = a[i + n]
-    for i in range(n, vec.S.length):
-        result[i] = b[i - n]
+    for i in range(vec.S.length - n, vec.S.length):
+        result[i] = b[i - (vec.S.length - n)]
     return result
 ```
 
@@ -789,11 +789,11 @@ Extracts even elements from both input and interleaves them.
 - `vec.v32.interleave_even(a: vec.v32, b: vec.v32) -> vec.v32`
 - `vec.v64.interleave_even(a: vec.v64, b: vec.v64) -> vec.v64`
 - `vec.v128.interleave_even(a: vec.v128, b: vec.v128) -> vec.v128`
-- `vec.m8.interleave_even(a: vec.m8, b: mec.m8) -> vec.m8`
-- `vec.m16.interleave_even(a: vec.m16, b: mec.m16) -> vec.m16`
-- `vec.m32.interleave_even(a: vec.m32, b: mec.m32) -> vec.m32`
-- `vec.m64.interleave_even(a: vec.m64, b: mec.m64) -> vec.m64`
-- `vec.m128.interleave_even(a: vec.m128, b: mec.m128) -> vec.m128`
+- `vec.m8.interleave_even(a: vec.m8, b: vec.m8) -> vec.m8`
+- `vec.m16.interleave_even(a: vec.m16, b: vec.m16) -> vec.m16`
+- `vec.m32.interleave_even(a: vec.m32, b: vec.m32) -> vec.m32`
+- `vec.m64.interleave_even(a: vec.m64, b: vec.m64) -> vec.m64`
+- `vec.m128.interleave_even(a: vec.m128, b: vec.m128) -> vec.m128`
 
 
 ```python
