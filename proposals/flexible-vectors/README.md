@@ -319,16 +319,15 @@ Inactive elements are not stored
 
 ### Splat scalar
 
-`idx` is interpreted modulo the length of the vector.
+For `vec.i8.splat` and `vec.i16.splat`, `x` is truncated to 8 and 16 bits respectively.
 
-- `vec.i8.splat(v: vec.v8, x: i32) -> vec.v8`
-- `vec.i16.splat(v: vec.v16, x: i32) -> vec.v16`
-- `vec.i32.splat(v: vec.v32, x: i32) -> vec.v32`
-- `vec.f32.splat(v: vec.v32, x: f32) -> vec.32`
-- `vec.i64.splat(v: vec.v64, x: i64) -> vec.v64`
-- `vec.f64.splat(v: vec.v64, x: f64) -> vec.v64`
-- `vec.v128.splat(v: vec.v128, x: v128) -> vec.v128`
-
+- `vec.i8.splat(x: i32) -> vec.v8`
+- `vec.i16.splat(x: i32) -> vec.v16`
+- `vec.i32.splat(x: i32) -> vec.v32`
+- `vec.f32.splat(x: f32) -> vec.v32`
+- `vec.i64.splat(x: i64) -> vec.v64`
+- `vec.f64.splat(x: f64) -> vec.v64`
+- `vec.v128.splat(x: v128) -> vec.v128`
 
 ### Extract lane
 
