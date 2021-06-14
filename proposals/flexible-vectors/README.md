@@ -158,6 +158,8 @@ def mask.S.none():
 Returns a mask whose active lanes satisfy `(x + laneIdx) CMP n`
 CMP one of the following: `eq`, `ne`, `lt`, `le`, `gt`, `ge`
 
+The addition and the comparison are done signed, with infinite precision.
+
 - `vec.m8.index_CMP(x: i32, n: i32) -> vec.m8`
 - `vec.m16.index_CMP(x: i32, n: i32) -> vec.m16`
 - `vec.m32.index_CMP(x: i32, n: i32) -> vec.m32`
