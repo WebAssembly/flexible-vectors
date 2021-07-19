@@ -159,6 +159,8 @@ instructions. For the `i8` and `i16` lanes, the high bits of `x` are ignored.
 * `vec.i16.lshl(a: vec.i16, x: i32) -> vec.i16`
 * `vec.i32.lshl(a: vec.i32, x: i32) -> vec.i32`
 * `vec.i64.lshl(a: vec.i64, x: i32) -> vec.i64`
+* `vec.f32.lshl(a: vec.f32, x: i32) -> vec.f32`
+* `vec.f64.lshl(a: vec.f64, x: i32) -> vec.f64`
 
 Returns a new vector with lanes selected from the lanes of the two input
 vectors `a` and `b` by shifting lanes of the original to the left by the amount
@@ -181,6 +183,8 @@ def S.lshl(a, x):
 * `vec.i16.lshr(a: vec.i16, x: i32) -> vec.i16`
 * `vec.i32.lshr(a: vec.i32, x: i32) -> vec.i32`
 * `vec.i64.lshr(a: vec.i64, x: i32) -> vec.i64`
+* `vec.f32.lshr(a: vec.f32, x: i32) -> vec.f32`
+* `vec.f64.lshr(a: vec.f64, x: i32) -> vec.f64`
 
 Returns a new vector with lanes selected from the lanes of the two input
 vectors `a` and `b` by shifting lanes of the original to the right by the
@@ -326,8 +330,8 @@ def S.add_sat_u(a, b):
 * `vec.i16.sub_sat_s(a: vec.i16, b: vec.i16) -> vec.i16`
 * `vec.i16.sub_sat_u(a: vec.i16, b: vec.i16) -> vec.i16`
 * `vec.i32.sub_sat_s(a: vec.i32, b: vec.i32) -> vec.i32`
-* `vec.i32.sub_sat_s(a: vec.i32, b: vec.i32) -> vec.i32`
-* `vec.i64.sub_sat_u(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i32.sub_sat_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.sub_sat_s(a: vec.i64, b: vec.i64) -> vec.i64`
 * `vec.i64.sub_sat_u(a: vec.i64, b: vec.i64) -> vec.i64`
 
 Lane-wise saturating subtraction:
@@ -641,17 +645,21 @@ def S.ne(a, b):
 
 #### Load and store
 
-- `vec.v8.load(memarg) -> vec.v8`
-- `vec.v16.load(memarg) -> vec.v16`
-- `vec.v32.load(memarg) -> vec.v32`
-- `vec.v64.load(memarg) -> vec.v64`
+- `vec.i8.load(memarg) -> vec.i8`
+- `vec.i16.load(memarg) -> vec.i16`
+- `vec.i32.load(memarg) -> vec.i32`
+- `vec.i64.load(memarg) -> vec.i64`
+- `vec.f32.load(memarg) -> vec.f32`
+- `vec.f64.load(memarg) -> vec.f64`
 
 Load a vector from the given heap address.
 
-- `vec.v8.store(memarg, data:vec.v8)`
-- `vec.v16.store(memarg, data:vec.v16)`
-- `vec.v32.store(memarg, data:vec.v32)`
-- `vec.v64.store(memarg, data:vec.v64)`
+- `vec.i8.store(memarg, data:vec.i8)`
+- `vec.i16.store(memarg, data:vec.i16)`
+- `vec.i32.store(memarg, data:vec.i32)`
+- `vec.i64.store(memarg, data:vec.i64)`
+- `vec.f32.store(memarg, data:vec.f32)`
+- `vec.f64.store(memarg, data:vec.f64)`
 
 Store a vector to the given heap address.
 
