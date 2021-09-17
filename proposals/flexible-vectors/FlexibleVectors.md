@@ -162,9 +162,9 @@ instructions. For the `i8` and `i16` lanes, the high bits of `x` are ignored.
 * `vec.f32.lshl(a: vec.f32, x: i32) -> vec.f32`
 * `vec.f64.lshl(a: vec.f64, x: i32) -> vec.f64`
 
-Returns a new vector with lanes selected from the lanes of the two input
-vectors `a` and `b` by shifting lanes of the original to the left by the amount
-specified in the integer argument and shifting zero values in.
+Returns a new vector with lanes selected from the lanes of input vector `a` by
+shifting lanes of the original to the left by the amount specified in the
+integer argument and shifting zero values in.
 
 ```python
 def S.lshl(a, x):
@@ -186,9 +186,9 @@ def S.lshl(a, x):
 * `vec.f32.lshr(a: vec.f32, x: i32) -> vec.f32`
 * `vec.f64.lshr(a: vec.f64, x: i32) -> vec.f64`
 
-Returns a new vector with lanes selected from the lanes of the two input
-vectors `a` and `b` by shifting lanes of the original to the right by the
-amount specified in the integer argument and shifting zero values in.
+Returns a new vector with lanes selected from the lanes of input vector `a` by
+shifting lanes of the original to the right by the amount specified in the
+integer argument and shifting zero values in.
 
 ```python
 def S.lshr(a, x):
