@@ -109,6 +109,30 @@ Non-saturating integer arithmetic:
 | `vec.i16.neg`            |    `0x79`|   `0x33`| -                        |
 | `vec.i32.neg`            |    `0x78`|   `0x33`| -                        |
 | `vec.i64.neg`            |    `0x77`|   `0x33`| -                        |
+| `vec.i8.min_u`           |    `0x7A`|   `0x34`| -                        |
+| `vec.i16.min_u`          |    `0x79`|   `0x34`| -                        |
+| `vec.i32.min_u`          |    `0x78`|   `0x34`| -                        |
+| `vec.i64.min_u`          |    `0x77`|   `0x34`| -                        |
+| `vec.i8.min_s`           |    `0x7A`|   `0x35`| -                        |
+| `vec.i16.min_s`          |    `0x79`|   `0x35`| -                        |
+| `vec.i32.min_s`          |    `0x78`|   `0x35`| -                        |
+| `vec.i64.min_s`          |    `0x77`|   `0x35`| -                        |
+| `vec.i8.max_u`           |    `0x7A`|   `0x36`| -                        |
+| `vec.i16.max_u`          |    `0x79`|   `0x36`| -                        |
+| `vec.i32.max_u`          |    `0x78`|   `0x36`| -                        |
+| `vec.i64.max_u`          |    `0x77`|   `0x36`| -                        |
+| `vec.i8.max_s`           |    `0x7A`|   `0x37`| -                        |
+| `vec.i16.max_s`          |    `0x79`|   `0x37`| -                        |
+| `vec.i32.max_s`          |    `0x78`|   `0x37`| -                        |
+| `vec.i64.max_s`          |    `0x77`|   `0x37`| -                        |
+| `vec.i8.avgr_u`          |    `0x7A`|   `0x38`| -                        |
+| `vec.i16.avgr_u`         |    `0x79`|   `0x38`| -                        |
+| `vec.i32.avgr_u`         |    `0x78`|   `0x38`| -                        |
+| `vec.i64.avgr_u`         |    `0x77`|   `0x38`| -                        |
+| `vec.i8.abs`             |    `0x7A`|   `0x39`| -                        |
+| `vec.i16.abs`            |    `0x79`|   `0x39`| -                        |
+| `vec.i32.abs`            |    `0x78`|   `0x39`| -                        |
+| `vec.i64.abs`            |    `0x77`|   `0x39`| -                        |
 
 Saturating integer arithmetic:
 
@@ -130,30 +154,6 @@ Saturating integer arithmetic:
 | `vec.i16.sub_sat_s`      |    `0x79`|   `0x43`| -                        |
 | `vec.i32.sub_sat_s`      |    `0x78`|   `0x43`| -                        |
 | `vec.i64.sub_sat_s`      |    `0x77`|   `0x43`| -                        |
-| `vec.i8.min_u`           |    `0x7A`|   `0x44`| -                        |
-| `vec.i16.min_u`          |    `0x79`|   `0x44`| -                        |
-| `vec.i32.min_u`          |    `0x78`|   `0x44`| -                        |
-| `vec.i64.min_u`          |    `0x77`|   `0x44`| -                        |
-| `vec.i8.min_s`           |    `0x7A`|   `0x45`| -                        |
-| `vec.i16.min_s`          |    `0x79`|   `0x45`| -                        |
-| `vec.i32.min_s`          |    `0x78`|   `0x45`| -                        |
-| `vec.i64.min_s`          |    `0x77`|   `0x45`| -                        |
-| `vec.i8.max_u`           |    `0x7A`|   `0x46`| -                        |
-| `vec.i16.max_u`          |    `0x79`|   `0x46`| -                        |
-| `vec.i32.max_u`          |    `0x78`|   `0x46`| -                        |
-| `vec.i64.max_u`          |    `0x77`|   `0x46`| -                        |
-| `vec.i8.max_s`           |    `0x7A`|   `0x47`| -                        |
-| `vec.i16.max_s`          |    `0x79`|   `0x47`| -                        |
-| `vec.i32.max_s`          |    `0x78`|   `0x47`| -                        |
-| `vec.i64.max_s`          |    `0x77`|   `0x47`| -                        |
-| `vec.i8.avgr_u`          |    `0x7A`|   `0x48`| -                        |
-| `vec.i16.avgr_u`         |    `0x79`|   `0x48`| -                        |
-| `vec.i32.avgr_u`         |    `0x78`|   `0x48`| -                        |
-| `vec.i64.avgr_u`         |    `0x77`|   `0x48`| -                        |
-| `vec.i8.abs`             |    `0x7A`|   `0x49`| -                        |
-| `vec.i16.abs`            |    `0x79`|   `0x49`| -                        |
-| `vec.i32.abs`            |    `0x78`|   `0x49`| -                        |
-| `vec.i64.abs`            |    `0x77`|   `0x49`| -                        |
 
 Bitwise operations:
 

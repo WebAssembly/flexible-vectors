@@ -278,6 +278,76 @@ def S.neg(a):
     return S.lanewise_unary(neg, a)
 ```
 
+#### Lane-wise integer minimum
+
+* `vec.i8.min_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.min_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.min_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.min_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.min_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.min_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.min_s(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.min_u(a: vec.i64, b: vec.i64) -> vec.i64`
+
+Compares lane-wise signed/unsigned integers, and returns the minimum of
+each pair.
+
+```python
+def S.min(a, b):
+    return S.lanewise_binary(min, a, b)
+```
+
+#### Lane-wise integer maximum
+
+* `vec.i8.max_s(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i8.max_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.max_s(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i16.max_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.max_s(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i32.max_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.max_s(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.i64.max_u(a: vec.i64, b: vec.i64) -> vec.i64`
+
+Compares lane-wise signed/unsigned integers, and returns the maximum of
+each pair.
+
+```python
+def S.max(a, b):
+    return S.lanewise_binary(max, a, b)
+```
+
+#### Lane-wise integer rounding average
+
+* `vec.i8.avgr_u(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.avgr_u(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.avgr_u(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.avgr_u(a: vec.i64, b: vec.i64) -> vec.i64`
+
+Lane-wise rounding average:
+
+```python
+def S.RoundingAverage(x, y):
+    return (x + y + 1) // 2
+
+def S.avgr_u(a, b):
+    return S.lanewise_binary(S.RoundingAverage, S.AsUnsigned(a), S.AsUnsigned(b))
+```
+
+#### Lane-wise integer absolute value
+
+* `vec.i8.abs(a: vec.i8) -> vec.i8`
+* `vec.i16.abs(a: vec.i16) -> vec.i16`
+* `vec.i32.abs(a: vec.i32) -> vec.i32`
+* `vec.i64.abs(a: vec.i64) -> vec.i64`
+
+Lane-wise wrapping absolute value.
+
+```python
+def S.abs(a):
+    return S.lanewise_unary(abs, S.AsSigned(a))
+```
+
+
 ### Saturating integer arithmetic
 
 Saturating integer arithmetic behaves differently on signed and unsigned lanes.
@@ -348,74 +418,6 @@ def S.sub_sat_u(a, b):
     return S.lanewise_binary(subsat, S.AsUnsigned(a), S.AsUnsigned(b))
 ```
 
-#### Lane-wise integer minimum
-
-* `vec.i8.min_s(a: vec.i8, b: vec.i8) -> vec.i8`
-* `vec.i8.min_u(a: vec.i8, b: vec.i8) -> vec.i8`
-* `vec.i16.min_s(a: vec.i16, b: vec.i16) -> vec.i16`
-* `vec.i16.min_u(a: vec.i16, b: vec.i16) -> vec.i16`
-* `vec.i32.min_s(a: vec.i32, b: vec.i32) -> vec.i32`
-* `vec.i32.min_u(a: vec.i32, b: vec.i32) -> vec.i32`
-* `vec.i64.min_s(a: vec.i64, b: vec.i64) -> vec.i64`
-* `vec.i64.min_u(a: vec.i64, b: vec.i64) -> vec.i64`
-
-Compares lane-wise signed/unsigned integers, and returns the minimum of
-each pair.
-
-```python
-def S.min(a, b):
-    return S.lanewise_binary(min, a, b)
-```
-
-#### Lane-wise integer maximum
-
-* `vec.i8.max_s(a: vec.i8, b: vec.i8) -> vec.i8`
-* `vec.i8.max_u(a: vec.i8, b: vec.i8) -> vec.i8`
-* `vec.i16.max_s(a: vec.i16, b: vec.i16) -> vec.i16`
-* `vec.i16.max_u(a: vec.i16, b: vec.i16) -> vec.i16`
-* `vec.i32.max_s(a: vec.i32, b: vec.i32) -> vec.i32`
-* `vec.i32.max_u(a: vec.i32, b: vec.i32) -> vec.i32`
-* `vec.i64.max_s(a: vec.i64, b: vec.i64) -> vec.i64`
-* `vec.i64.max_u(a: vec.i64, b: vec.i64) -> vec.i64`
-
-Compares lane-wise signed/unsigned integers, and returns the maximum of
-each pair.
-
-```python
-def S.max(a, b):
-    return S.lanewise_binary(max, a, b)
-```
-
-#### Lane-wise integer rounding average
-
-* `vec.i8.avgr_u(a: vec.i8, b: vec.i8) -> vec.i8`
-* `vec.i16.avgr_u(a: vec.i16, b: vec.i16) -> vec.i16`
-* `vec.i32.avgr_u(a: vec.i32, b: vec.i32) -> vec.i32`
-* `vec.i64.avgr_u(a: vec.i64, b: vec.i64) -> vec.i64`
-
-Lane-wise rounding average:
-
-```python
-def S.RoundingAverage(x, y):
-    return (x + y + 1) // 2
-
-def S.avgr_u(a, b):
-    return S.lanewise_binary(S.RoundingAverage, S.AsUnsigned(a), S.AsUnsigned(b))
-```
-
-#### Lane-wise integer absolute value
-
-* `vec.i8.abs(a: vec.i8) -> vec.i8`
-* `vec.i16.abs(a: vec.i16) -> vec.i16`
-* `vec.i32.abs(a: vec.i32) -> vec.i32`
-* `vec.i64.abs(a: vec.i64) -> vec.i64`
-
-Lane-wise wrapping absolute value.
-
-```python
-def S.abs(a):
-    return S.lanewise_unary(abs, S.AsSigned(a))
-```
 
 
 ### Bit shifts
