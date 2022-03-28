@@ -45,32 +45,68 @@ Vector length:
 
 Constructing vectors and accessing lanes:
 
-| Instruction              | `prefix` | `vecop` | Immediate operands       |
-| -------------------------|---------:|--------:|--------------------------|
-| `vec.i8.splat`           |    `0x7A`|   `0x10`| -                        |
-| `vec.i16.splat`          |    `0x79`|   `0x10`| -                        |
-| `vec.i32.splat`          |    `0x78`|   `0x10`| -                        |
-| `vec.i64.splat`          |    `0x77`|   `0x10`| -                        |
-| `vec.f32.splat`          |    `0x76`|   `0x10`| -                        |
-| `vec.f64.splat`          |    `0x75`|   `0x10`| -                        |
-| `vec.i8.extract_lane_u`  |    `0x7A`|   `0x11`| i:ImmLaneIdxV8           |
-| `vec.i16.extract_lane_u` |    `0x79`|   `0x11`| i:ImmLaneIdxV16          |
-| `vec.i32.extract_lane_u` |    `0x78`|   `0x11`| i:ImmLaneIdxV32          |
-| `vec.i64.extract_lane_u` |    `0x77`|   `0x11`| i:ImmLaneIdxV64          |
-| `vec.f32.extract_lane_u` |    `0x76`|   `0x11`| i:ImmLaneIdxV32          |
-| `vec.f64.extract_lane_u` |    `0x75`|   `0x11`| i:ImmLaneIdxV64          |
-| `vec.i8.extract_lane_s`  |    `0x7A`|   `0x12`| i:ImmLaneIdxV8           |
-| `vec.i16.extract_lane_s` |    `0x79`|   `0x12`| i:ImmLaneIdxV16          |
-| `vec.i32.extract_lane_s` |    `0x78`|   `0x12`| i:ImmLaneIdxV32          |
-| `vec.i64.extract_lane_s` |    `0x77`|   `0x12`| i:ImmLaneIdxV64          |
-| `vec.f32.extract_lane_s` |    `0x76`|   `0x12`| i:ImmLaneIdxV32          |
-| `vec.f64.extract_lane_s` |    `0x75`|   `0x12`| i:ImmLaneIdxV64          |
-| `vec.i8.replace_lane`    |    `0x7A`|   `0x13`| i:ImmLaneIdxV8           |
-| `vec.i16.replace_lane`   |    `0x79`|   `0x13`| i:ImmLaneIdxV16          |
-| `vec.i32.replace_lane`   |    `0x78`|   `0x13`| i:ImmLaneIdxV32          |
-| `vec.i64.replace_lane`   |    `0x77`|   `0x13`| i:ImmLaneIdxV64          |
-| `vec.f32.replace_lane`   |    `0x76`|   `0x13`| i:ImmLaneIdxV32          |
-| `vec.f64.replace_lane`   |    `0x75`|   `0x13`| i:ImmLaneIdxV64          |
+| Instruction                  | `prefix` | `vecop` | Immediate operands   |
+| -----------------------------|---------:|--------:|----------------------|
+| `vec.i8.splat`               |    `0x7A`|   `0x10`| -                    |
+| `vec.i16.splat`              |    `0x79`|   `0x10`| -                    |
+| `vec.i32.splat`              |    `0x78`|   `0x10`| -                    |
+| `vec.i64.splat`              |    `0x77`|   `0x10`| -                    |
+| `vec.f32.splat`              |    `0x76`|   `0x10`| -                    |
+| `vec.f64.splat`              |    `0x75`|   `0x10`| -                    |
+| `vec.i8.extract_lane_imm_u`  |    `0x7A`|   `0x11`| i:ImmLaneIdx16       |
+| `vec.i16.extract_lane_imm_u` |    `0x79`|   `0x11`| i:ImmLaneIdx8        |
+| `vec.i32.extract_lane_imm_u` |    `0x78`|   `0x11`| i:ImmLaneIdx4        |
+| `vec.i64.extract_lane_imm_u` |    `0x77`|   `0x11`| i:ImmLaneIdx2        |
+| `vec.f32.extract_lane_imm_u` |    `0x76`|   `0x11`| i:ImmLaneIdx4        |
+| `vec.f64.extract_lane_imm_u` |    `0x75`|   `0x11`| i:ImmLaneIdx2        |
+| `vec.i8.extract_lane_imm_s`  |    `0x7A`|   `0x12`| i:ImmLaneIdx16       |
+| `vec.i16.extract_lane_imm_s` |    `0x79`|   `0x12`| i:ImmLaneIdx8        |
+| `vec.i32.extract_lane_imm_s` |    `0x78`|   `0x12`| i:ImmLaneIdx4        |
+| `vec.i64.extract_lane_imm_s` |    `0x77`|   `0x12`| i:ImmLaneIdx2        |
+| `vec.f32.extract_lane_imm_s` |    `0x76`|   `0x12`| i:ImmLaneIdx4        |
+| `vec.f64.extract_lane_imm_s` |    `0x75`|   `0x12`| i:ImmLaneIdx2        |
+| `vec.i8.replace_lane_imm`    |    `0x7A`|   `0x13`| i:ImmLaneIdx16       |
+| `vec.i16.replace_lane_imm`   |    `0x79`|   `0x13`| i:ImmLaneIdx8        |
+| `vec.i32.replace_lane_imm`   |    `0x78`|   `0x13`| i:ImmLaneIdx4        |
+| `vec.i64.replace_lane_imm`   |    `0x77`|   `0x13`| i:ImmLaneIdx2        |
+| `vec.f32.replace_lane_imm`   |    `0x76`|   `0x13`| i:ImmLaneIdx4        |
+| `vec.f64.replace_lane_imm`   |    `0x75`|   `0x13`| i:ImmLaneIdx2        |
+| `vec.i8.extract_lane_u`      |    `0x7A`|   `0x14`| -                    |
+| `vec.i16.extract_lane_u`     |    `0x79`|   `0x14`| -                    |
+| `vec.i32.extract_lane_u`     |    `0x78`|   `0x14`| -                    |
+| `vec.i64.extract_lane_u`     |    `0x77`|   `0x14`| -                    |
+| `vec.f32.extract_lane_u`     |    `0x76`|   `0x14`| -                    |
+| `vec.f64.extract_lane_u`     |    `0x75`|   `0x14`| -                    |
+| `vec.i8.extract_lane_s`      |    `0x7A`|   `0x15`| -                    |
+| `vec.i16.extract_lane_s`     |    `0x79`|   `0x15`| -                    |
+| `vec.i32.extract_lane_s`     |    `0x78`|   `0x15`| -                    |
+| `vec.i64.extract_lane_s`     |    `0x77`|   `0x15`| -                    |
+| `vec.f32.extract_lane_s`     |    `0x76`|   `0x15`| -                    |
+| `vec.f64.extract_lane_s`     |    `0x75`|   `0x15`| -                    |
+| `vec.i8.replace_lane`        |    `0x7A`|   `0x16`| -                    |
+| `vec.i16.replace_lane`       |    `0x79`|   `0x16`| -                    |
+| `vec.i32.replace_lane`       |    `0x78`|   `0x16`| -                    |
+| `vec.i64.replace_lane`       |    `0x77`|   `0x16`| -                    |
+| `vec.f32.replace_lane`       |    `0x76`|   `0x16`| -                    |
+| `vec.f64.replace_lane`       |    `0x75`|   `0x16`| -                    |
+| `vec.i8.extract_lane_mod_u`  |    `0x7A`|   `0x17`| -                    |
+| `vec.i16.extract_lane_mod_u` |    `0x79`|   `0x17`| -                    |
+| `vec.i32.extract_lane_mod_u` |    `0x78`|   `0x17`| -                    |
+| `vec.i64.extract_lane_mod_u` |    `0x77`|   `0x17`| -                    |
+| `vec.f32.extract_lane_mod_u` |    `0x76`|   `0x17`| -                    |
+| `vec.f64.extract_lane_mod_u` |    `0x75`|   `0x17`| -                    |
+| `vec.i8.extract_lane_mod_s`  |    `0x7A`|   `0x18`| -                    |
+| `vec.i16.extract_lane_mod_s` |    `0x79`|   `0x18`| -                    |
+| `vec.i32.extract_lane_mod_s` |    `0x78`|   `0x18`| -                    |
+| `vec.i64.extract_lane_mod_s` |    `0x77`|   `0x18`| -                    |
+| `vec.f32.extract_lane_mod_s` |    `0x76`|   `0x18`| -                    |
+| `vec.f64.extract_lane_mod_s` |    `0x75`|   `0x18`| -                    |
+| `vec.i8.replace_lane_mod`    |    `0x7A`|   `0x19`| -                    |
+| `vec.i16.replace_lane_mod`   |    `0x79`|   `0x19`| -                    |
+| `vec.i32.replace_lane_mod`   |    `0x78`|   `0x19`| -                    |
+| `vec.i64.replace_lane_mod`   |    `0x77`|   `0x19`| -                    |
+| `vec.f32.replace_lane_mod`   |    `0x76`|   `0x19`| -                    |
+| `vec.f64.replace_lane_mod`   |    `0x75`|   `0x19`| -                    |
 
 Shuffles:
 
