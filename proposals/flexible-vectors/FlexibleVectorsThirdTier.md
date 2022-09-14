@@ -22,20 +22,20 @@ reasons are listed in "implementation notes" sections.
 
 - 8-bit lanes
   - `vec.i8.set_length(len: i32) -> i32`
-  - `vec.i8.set_length_imm(imm: ImmLaneIdx8) -> i32`
+  - `vec.i8.set_length_imm(idx: i32) -> i32`
 - 16-bit lanes
   - `vec.i16.set_length(len: i32) -> i32`
-  - `vec.i16.set_length_imm(imm: ImmLaneIdx16) -> i32`
+  - `vec.i16.set_length_imm(idx: i32) -> i32`
 - 32-bit lanes
   - `vec.i32.set_length(len: i32) -> i32`
-  - `vec.i32.set_length_imm(imm: ImmLaneIdx32) -> i32`
+  - `vec.i32.set_length_imm(idx: i32) -> i32`
   - `vec.f32.set_length(len: i32) -> i32`
-  - `vec.f32.set_length_imm(imm: ImmLaneIdx32) -> i32`
+  - `vec.f32.set_length_imm(idx: i32) -> i32`
 - 64-bit lanes
   - `vec.i64.set_length(len: i32) -> i32`
-  - `vec.i64.set_length_imm(imm: ImmLaneIdx64) -> i32`
+  - `vec.i64.set_length_imm(idx: i32) -> i32`
   - `vec.f64.set_length(len: i32) -> i32`
-  - `vec.f64.set_length_imm(imm: ImmLaneIdx64) -> i32`
+  - `vec.f64.set_length_imm(idx: i32) -> i32`
 
 The above operations set the number of lanes for corresponding vector type to
 the minimum of supported vector length and the requested length. The length is

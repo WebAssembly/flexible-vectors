@@ -54,14 +54,17 @@ the following differences applying to overall types:
 - Number of lanes is set separately for different lane sizes
 - Vectors with different lane size are not immediately interoperable
 
-## Immediate operands
+## Lane index operands compatible with SIMD
 
-_TBD_ value range, depends on instruction encoding.
+Some operations acess lanes within part of the vector compatible to existing
+SIMD standard. Those operands have a limited valid range, and it is a
+validation error if the immediate operands are out of range.
 
-- `ImmLaneIdxV8`: lane index for 8-bit lanes
-- `ImmLaneIdxV16`: lane index for 16-bit lanes
-- `ImmLaneIdxV32`: lane index for 32-bit lanes
-- `ImmLaneIdxV64`: lane index for 64-bit lanes
+* `ImmLaneIdx2`: A byte with values in the range 0–1 identifying a lane.
+* `ImmLaneIdx4`: A byte with values in the range 0–3 identifying a lane.
+* `ImmLaneIdx8`: A byte with values in the range 0–7 identifying a lane.
+* `ImmLaneIdx16`: A byte with values in the range 0–15 identifying a lane.
+* `ImmLaneIdx32`: A byte with values in the range 0–31 identifying a lane.
 
 ## Operations
 
@@ -102,20 +105,21 @@ def S.splat(x):
 
 ### Accessing lanes
 
-#### Extract lane as a scalar
+#### Extract lane as a scalar using limited immediate index
 
-- `vec.i8.extract_lane_s(a: vec.i8, imm: ImmLaneIdxV8) -> i32`
-- `vec.i8.extract_lane_u(a: vec.i8, imm: ImmLaneIdxV8) -> i32`
-- `vec.i16.extract_lane_s(a: vec.i16, imm: ImmLaneIdxV16) -> i32`
-- `vec.i16.extract_lane_u(a: vec.i16, imm: ImmLaneIdxV16) -> i32`
-- `vec.i32.extract_lane(a: vec.i32, imm: ImmLaneIdxV32) -> i32`
-- `vec.i64.extract_lane(a: vec.i64, imm: ImmLaneIdxV64) -> i64`
-- `vec.f32.extract_lane(a: vec.f32, imm: ImmLaneIdxV32) -> f32`
-- `vec.f64.extract_lane(a: vec.f64, imm: ImmLaneIdxV64) -> f64`
+- `vec.i8.extract_lane_imm_s(a: vec.i8, imm: ImmLaneIdx16) -> i32`
+- `vec.i8.extract_lane_imm_u(a: vec.i8, imm: ImmLaneIdx16) -> i32`
+- `vec.i16.extract_lane_imm_s(a: vec.i16, imm: ImmLaneIdx8) -> i32`
+- `vec.i16.extract_lane_imm_u(a: vec.i16, imm: ImmLaneIdx8) -> i32`
+- `vec.i32.extract_lane_imm(a: vec.i32, imm: ImmLaneIdx4) -> i32`
+- `vec.i64.extract_lane_imm(a: vec.i64, imm: ImmLaneIdx2) -> i64`
+- `vec.f32.extract_lane_imm(a: vec.f32, imm: ImmLaneIdx4) -> f32`
+- `vec.f64.extract_lane_imm(a: vec.f64, imm: ImmLaneIdx2) -> f64`
 
 Extract the scalar value of lane specified in the immediate mode operand `imm`
 in `a`. The `{interpretation}.extract_lane{_s}{_u}` instructions are encoded
-with one immediate byte providing the index of the lane to extract.
+with one immediate byte providing the index of the lane to extract. Index
+values outside lower 128 bits of the vector result in a validation error.
 
 ```python
 def S.extract_lane(a, i):
@@ -125,19 +129,20 @@ def S.extract_lane(a, i):
 The `_s` and `_u` variants will sign-extend or zero-extend the lane value to
 `i32` respectively.
 
-#### Replace lane value
+#### Replace lane using limited immediate index
 
-- `vec.i8.replace_lane(a: vec.i8, imm: ImmLaneIdxV8, x: i32) -> vec.i8`
-- `vec.i16.replace_lane(a: vec.i16, imm: ImmLaneIdxV16, x: i32) -> vec.i16`
-- `vec.i32.replace_lane(a: vec.i32, imm: ImmLaneIdxV32, x: i32) -> vec.i32`
-- `vec.i64.replace_lane(a: vec.i64, imm: ImmLaneIdxV64, x: i64) -> vec.i64`
-- `vec.f32.replace_lane(a: vec.f32, imm: ImmLaneIdxV32, x: f32) -> vec.f32`
-- `vec.f64.replace_lane(a: vec.f64, imm: ImmLaneIdxV64, x: f64) -> vec.f64`
+- `vec.i8.replace_lane_imm(a: vec.i8, imm: ImmLaneIdx16, x: i32) -> vec.i8`
+- `vec.i16.replace_lane_imm(a: vec.i16, imm: ImmLaneIdx8, x: i32) -> vec.i16`
+- `vec.i32.replace_lane_imm(a: vec.i32, imm: ImmLaneIdx4, x: i32) -> vec.i32`
+- `vec.i64.replace_lane_imm(a: vec.i64, imm: ImmLaneIdx2, x: i64) -> vec.i64`
+- `vec.f32.replace_lane_imm(a: vec.f32, imm: ImmLaneIdx4, x: f32) -> vec.f32`
+- `vec.f64.replace_lane_imm(a: vec.f64, imm: ImmLaneIdx2, x: f64) -> vec.f64`
 
 Return a new vector with lanes identical to `a`, except for the lane specified
 in the immediate mode operand `imm` which has the value `x`. The
 `{interpretation}.replace_lane` instructions are encoded with an immediate byte 
-providing the index of the lane the value of which is to be replaced.
+providing the index of the lane the value of which is to be replaced. Index
+values outside lower 128 bits of the vector result in a validation error.
 
 ```python
 def S.replace_lane(a, i, x):
