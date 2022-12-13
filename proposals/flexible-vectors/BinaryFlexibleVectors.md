@@ -279,12 +279,12 @@ Floating-point:
 | `vec.f64.add`            |    `0x75`|   `0x94`| -                        |
 | `vec.f32.sub`            |    `0x76`|   `0x95`| -                        |
 | `vec.f64.sub`            |    `0x75`|   `0x95`| -                        |
-| `vec.f32.div`            |    `0x76`|   `0x95`| -                        |
-| `vec.f64.div`            |    `0x75`|   `0x95`| -                        |
-| `vec.f32.mul`            |    `0x76`|   `0x96`| -                        |
-| `vec.f64.mul`            |    `0x75`|   `0x96`| -                        |
-| `vec.f32.sqrt`           |    `0x76`|   `0x97`| -                        |
-| `vec.f64.sqrt`           |    `0x75`|   `0x97`| -                        |
+| `vec.f32.div`            |    `0x76`|   `0x96`| -                        |
+| `vec.f64.div`            |    `0x75`|   `0x96`| -                        |
+| `vec.f32.mul`            |    `0x76`|   `0x97`| -                        |
+| `vec.f64.mul`            |    `0x75`|   `0x97`| -                        |
+| `vec.f32.sqrt`           |    `0x76`|   `0x98`| -                        |
+| `vec.f64.sqrt`           |    `0x75`|   `0x98`| -                        |
 
 Conversions:
 
