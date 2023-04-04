@@ -110,20 +110,71 @@ Constructing vectors and accessing lanes:
 
 Shuffles:
 
-| Instruction              | `prefix` | `vecop` | Immediate operands       |
-| -------------------------|---------:|--------:|--------------------------|
-| `vec.i8.lshl`            |    `0x7A`|   `0x20`| -                        |
-| `vec.i16.lshl`           |    `0x79`|   `0x20`| -                        |
-| `vec.i32.lshl`           |    `0x78`|   `0x20`| -                        |
-| `vec.i64.lshl`           |    `0x77`|   `0x20`| -                        |
-| `vec.f32.lshl`           |    `0x76`|   `0x20`| -                        |
-| `vec.f64.lshl`           |    `0x75`|   `0x20`| -                        |
-| `vec.i8.lshr`            |    `0x7A`|   `0x21`| -                        |
-| `vec.i16.lshr`           |    `0x79`|   `0x21`| -                        |
-| `vec.i32.lshr`           |    `0x78`|   `0x21`| -                        |
-| `vec.i64.lshr`           |    `0x77`|   `0x21`| -                        |
-| `vec.f32.lshr`           |    `0x76`|   `0x21`| -                        |
-| `vec.f64.lshr`           |    `0x75`|   `0x21`| -                        |
+| Instruction                  | `prefix` | `vecop` | Immediate operands   |
+| -----------------------------|---------:|--------:|----------------------|
+| `vec.i8.lshl`                |    `0x7A`|   `0x20`| -                    |
+| `vec.i16.lshl`               |    `0x79`|   `0x20`| -                    |
+| `vec.i32.lshl`               |    `0x78`|   `0x20`| -                    |
+| `vec.i64.lshl`               |    `0x77`|   `0x20`| -                    |
+| `vec.f32.lshl`               |    `0x76`|   `0x20`| -                    |
+| `vec.f64.lshl`               |    `0x75`|   `0x20`| -                    |
+| `vec.i8.lshr`                |    `0x7A`|   `0x21`| -                    |
+| `vec.i16.lshr`               |    `0x79`|   `0x21`| -                    |
+| `vec.i32.lshr`               |    `0x78`|   `0x21`| -                    |
+| `vec.i64.lshr`               |    `0x77`|   `0x21`| -                    |
+| `vec.f32.lshr`               |    `0x76`|   `0x21`| -                    |
+| `vec.f64.lshr`               |    `0x75`|   `0x21`| -                    |
+| `vec.i8.concat_lower_lower`  |    `0x7A`|   `0x22`| -                    |
+| `vec.i16.concat_lower_lower` |    `0x79`|   `0x22`| -                    |
+| `vec.i32.concat_lower_lower` |    `0x78`|   `0x22`| -                    |
+| `vec.i64.concat_lower_lower` |    `0x77`|   `0x22`| -                    |
+| `vec.f32.concat_lower_lower` |    `0x76`|   `0x22`| -                    |
+| `vec.f64.concat_lower_lower` |    `0x75`|   `0x22`| -                    |
+| `vec.i8.concat_lower_upper`  |    `0x7A`|   `0x23`| -                    |
+| `vec.i16.concat_lower_upper` |    `0x79`|   `0x23`| -                    |
+| `vec.i32.concat_lower_upper` |    `0x78`|   `0x23`| -                    |
+| `vec.i64.concat_lower_upper` |    `0x77`|   `0x23`| -                    |
+| `vec.f32.concat_lower_upper` |    `0x76`|   `0x23`| -                    |
+| `vec.f64.concat_lower_upper` |    `0x75`|   `0x23`| -                    |
+| `vec.i8.concat_upper_lower`  |    `0x7A`|   `0x24`| -                    |
+| `vec.i16.concat_upper_lower` |    `0x79`|   `0x24`| -                    |
+| `vec.i32.concat_upper_lower` |    `0x78`|   `0x24`| -                    |
+| `vec.i64.concat_upper_lower` |    `0x77`|   `0x24`| -                    |
+| `vec.f32.concat_upper_lower` |    `0x76`|   `0x24`| -                    |
+| `vec.f64.concat_upper_lower` |    `0x75`|   `0x24`| -                    |
+| `vec.i8.concat_upper_upper`  |    `0x7A`|   `0x25`| -                    |
+| `vec.i16.concat_upper_upper` |    `0x79`|   `0x25`| -                    |
+| `vec.i32.concat_upper_upper` |    `0x78`|   `0x25`| -                    |
+| `vec.i64.concat_upper_upper` |    `0x77`|   `0x25`| -                    |
+| `vec.f32.concat_upper_upper` |    `0x76`|   `0x25`| -                    |
+| `vec.f64.concat_upper_upper` |    `0x75`|   `0x25`| -                    |
+| `vec.i8.concat_even`         |    `0x7A`|   `0x26`| -                    |
+| `vec.i16.concat_even`        |    `0x79`|   `0x26`| -                    |
+| `vec.i32.concat_even`        |    `0x78`|   `0x26`| -                    |
+| `vec.i64.concat_even`        |    `0x77`|   `0x26`| -                    |
+| `vec.f32.concat_even`        |    `0x76`|   `0x26`| -                    |
+| `vec.f64.concat_even`        |    `0x75`|   `0x26`| -                    |
+| `vec.i8.concat_odd`          |    `0x7A`|   `0x27`| -                    |
+| `vec.i16.concat_odd`         |    `0x79`|   `0x27`| -                    |
+| `vec.i32.concat_odd`         |    `0x78`|   `0x27`| -                    |
+| `vec.i64.concat_odd`         |    `0x77`|   `0x27`| -                    |
+| `vec.f32.concat_odd`         |    `0x76`|   `0x27`| -                    |
+| `vec.f64.concat_odd`         |    `0x75`|   `0x27`| -                    |
+| `vec.i8.oddeven`             |    `0x7A`|   `0x28`| -                    |
+| `vec.i16.oddeven`            |    `0x79`|   `0x28`| -                    |
+| `vec.i32.oddeven`            |    `0x78`|   `0x28`| -                    |
+| `vec.i64.oddeven`            |    `0x77`|   `0x28`| -                    |
+| `vec.f32.oddeven`            |    `0x76`|   `0x28`| -                    |
+| `vec.f64.oddeven`            |    `0x75`|   `0x28`| -                    |
+| `vec.i16.reverse`            |    `0x79`|   `0x29`| -                    |
+| `vec.i32.reverse`            |    `0x78`|   `0x29`| -                    |
+| `vec.i64.reverse`            |    `0x77`|   `0x29`| -                    |
+| `vec.f32.reverse`            |    `0x76`|   `0x29`| -                    |
+| `vec.f64.reverse`            |    `0x75`|   `0x29`| -                    |
+| `vec.i32.dup_odd`            |    `0x78`|   `0x2A`| -                    |
+| `vec.i64.dup_odd`            |    `0x77`|   `0x2A`| -                    |
+| `vec.f32.dup_odd`            |    `0x76`|   `0x2A`| -                    |
+| `vec.f64.dup_odd`            |    `0x75`|   `0x2A`| -                    |
 
 Non-saturating integer arithmetic:
 

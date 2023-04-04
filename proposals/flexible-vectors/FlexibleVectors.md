@@ -206,6 +206,175 @@ def S.lshr(a, x):
     return result
 ```
 
+#### Vector combine
+
+Combinations of input vectors.
+
+* `vec.i8.concat_lower_lower(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.concat_lower_lower(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.concat_lower_lower(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.concat_lower_lower(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.concat_lower_lower(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.concat_lower_lower(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Returns a new vector consisting of lower half of both inputs concatenated.
+
+```python
+def S.concat_lower_lower(a, b):
+    result = a[:(S.Lanes / 2)] + b[:(S.Lanes / 2)]
+    return result
+```
+
+* `vec.i8.concat_lower_upper(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.concat_lower_upper(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.concat_lower_upper(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.concat_lower_upper(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.concat_lower_upper(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.concat_lower_upper(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Returns a new vector consisting of lower half of first input concatenated with
+upper half of the second input.
+
+```python
+def S.concat_lower_upper(a, b):
+    result = a[:(S.Lanes / 2)] + b[(S.Lanes / 2):]
+    return result
+```
+
+* `vec.i8.concat_upper_lower(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.concat_upper_lower(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.concat_upper_lower(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.concat_upper_lower(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.concat_upper_lower(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.concat_upper_lower(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Returns a new vector consisting of lower half of first input concatenated with
+upper half of the second input.
+
+```python
+def S.concat_upper_lower(a, b):
+    result = a[(S.Lanes / 2):] + b[:(S.Lanes / 2)]
+    return result
+```
+
+* `vec.i8.concat_upper_upper(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.concat_upper_upper(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.concat_upper_upper(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.concat_upper_upper(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.concat_upper_upper(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.concat_upper_upper(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Returns a new vector consisting of upper half of both inputs concatenated.
+
+```python
+def S.concat_upper_upper(a, b):
+    result = a[(S.Lanes / 2):] + b[(S.Lanes / 2):]
+    return result
+```
+
+* `vec.i8.concat_even(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.concat_even(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.concat_even(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.concat_even(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.concat_even(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.concat_even(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Returns a new vector consisting of even lanes from first input concatenated
+with even lanes from second input.
+
+```python
+def S.concat_even(a, b):
+    result = S.New()
+    for i in range(S.Lanes):
+        if i < (S.Lanes / 2):
+            result[i] = a[2 * i]
+        else:
+            result[i] = b[2 * (i - S.Lanes/2)]
+    return result
+```
+
+* `vec.i8.concat_odd(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.concat_odd(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.concat_odd(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.concat_odd(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.concat_odd(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.concat_odd(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Returns a new vector consisting of odd lanes from first input concatenated
+with odd lanes from second input.
+
+```python
+def S.concat_odd(a, b):
+    result = S.New()
+    for i in range(S.Lanes):
+        if i < (S.Lanes / 2):
+            result[i] = a[2 * i + 1]
+        else:
+            result[i] = b[2 * (i - S.Lanes/2) + 1]
+    return result
+```
+
+#### Odd-even
+
+* `vec.i8.oddeven(a: vec.i8, b: vec.i8) -> vec.i8`
+* `vec.i16.oddeven(a: vec.i16, b: vec.i16) -> vec.i16`
+* `vec.i32.oddeven(a: vec.i32, b: vec.i32) -> vec.i32`
+* `vec.i64.oddeven(a: vec.i64, b: vec.i64) -> vec.i64`
+* `vec.f32.oddeven(a: vec.f32, b: vec.f32) -> vec.f32`
+* `vec.f64.oddeven(a: vec.f64, b: vec.f64) -> vec.f64`
+
+Returns a new vector with odd lanes taken from matching positions in input
+vector `a` and even lanes - from matching positions in `b`.
+
+```python
+def S.oddeven(a, b):
+    result = S.New()
+    for i in range(S.Lanes):
+        if i % 2 = 1:
+            result[i] = a[i]
+        else:
+            result[i] = b[i]
+    return result
+```
+
+#### Reverse
+
+* `vec.i16.reverse(a: vec.i16) -> vec.i16`
+* `vec.i32.reverse(a: vec.i32) -> vec.i32`
+* `vec.i64.reverse(a: vec.i64) -> vec.i64`
+* `vec.f32.reverse(a: vec.f32) -> vec.f32`
+* `vec.f64.reverse(a: vec.f64) -> vec.f64`
+
+Returns a vector with lanes in reverse order.
+
+```python
+def S.reverse(a):
+    result = S.New()
+    for i in range(S.Lanes):
+        result[i] = a[S.Lanes - 1 - i]
+    return result
+```
+
+#### Duplicate odd lanes
+
+* `vec.i32.dup_odd(a: vec.i32) -> vec.i32`
+* `vec.i64.dup_odd(a: vec.i64) -> vec.i64`
+* `vec.f32.dup_odd(a: vec.f32) -> vec.f32`
+* `vec.f64.dup_odd(a: vec.f64) -> vec.f64`
+
+Returns a vector with odd lanes duplicated into lower-indexed even lanes.
+
+```python
+def S.reverse(a):
+    result = S.New()
+    for i in range(S.Lanes):
+        if i % 2 = 0:
+            result[i] = a[i + 1]
+        else:
+            result[i] = a[i]
+    return result
+```
+
 ### Integer arithmetic
 
 Wrapping integer arithmetic discards the high bits of the result.
