@@ -38,8 +38,8 @@ reasons are listed in "implementation notes" sections.
   - `vec.f64.set_length_imm(idx: i32) -> i32`
 
 The above operations set the number of lanes for corresponding vector type to
-the minimum of supported vector length and the requested length. The length is
-then returned on the stack.
+the minimum of supported vector length and the requested length. The difference
+is then returned on the stack.
 
 This sets number of lanes for vector operations working on corresponding vector
 types. Setting vector length to zero turns corresponding vector operations
